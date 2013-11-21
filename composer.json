@@ -1,0 +1,29 @@
+{
+    "name" : "quiqqer/countries",
+    "type" : "quiqqer-library",
+    "description" : "Provided countries for QUIQQER.",
+    "version" : "1.0.0",
+    "license" : "GPL-2.0+",
+
+    "authors" : [{
+        "name": "Henning Leutz",
+        "email": "leutz@pcsg.de",
+        "homepage": "http://www.pcsg.de",
+        "role": "Developer"
+    }],
+
+    "support" : {
+        "email" : "support@pcsg.de"
+    },
+
+    "require": {
+        "quiqqer/quiqqer" : "1.*",
+        "quiqqer/qutils" : "1.*"
+    },
+
+    "autoload": {
+        "psr-0" : {
+            "QUI" : "lib/"
+        }
+    }
+}
