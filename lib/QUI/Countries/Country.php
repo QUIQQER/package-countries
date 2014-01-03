@@ -19,7 +19,7 @@ class Country extends \QUI\QDOM
      * If you want a country, use the manager
      *
      * @example
-     * $Country = Utils_Countries_Manager::get('de');
+     * $Country = \QUI\Countries\Manager::get('de');
      * $Country->getName()
      *
      * @param Array $params

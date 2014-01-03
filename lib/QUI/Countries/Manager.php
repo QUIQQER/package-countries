@@ -29,10 +29,10 @@ class Manager extends \QUI\QDOM
      * Get a country
      *
      * @param String $code - the country code
-     * @return Utils_Countries_Country
+     * @return \QUI\Countries\Country
      *
      * @example
-     * $Country = Utils_Countries_Manager::get('de');
+     * $Country = \QUI\Countries\Manager::get('de');
      * $Country->getName()
      */
     static function get($code)
