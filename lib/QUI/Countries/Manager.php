@@ -10,7 +10,6 @@ namespace QUI\Countries;
  * Country Manager
  *
  * @author www.pcsg.de (Henning Leutz)
- * @package com.pcsg.qui.utils.countries
  */
 
 class Manager extends \QUI\QDOM
@@ -37,15 +36,12 @@ class Manager extends \QUI\QDOM
      */
     static function get($code)
     {
-        $result = \QUI::getDB()->select(array(
+        $result = \QUI::getDataBase()->fetch(array(
             'from'  => self::Table(),
             'where' => array(
-                'countries_iso_code_2' => \QUI\Utils\String::toUpper(
-                    $code
-                )
-              ),
-              'limit' => '1'
-
+                'countries_iso_code_2' => \QUI\Utils\String::toUpper( $code )
+            ),
+            'limit' => '1'
         ));
 
         if ( !isset( $result[0] ) ) {
@@ -68,7 +64,7 @@ class Manager extends \QUI\QDOM
             $order = 'en ASC';
         }
 
-        $result = \QUI::getDB()->select(array(
+        $result = \QUI::getDataBase()->fetch(array(
             'from'  => self::Table(),
             'order' => $order
         ));
@@ -80,5 +76,27 @@ class Manager extends \QUI\QDOM
         }
 
         return $countries;
+    }
+
+    /**
+     * Exist the country code in the database?
+     *
+     * @param String $code - Country code
+     * @return Bool
+     */
+    static function existsCountryCode($code)
+    {
+        try
+        {
+            self::get( $code );
+
+            return true;
+
+        } catch ( \QUI\Exception $Exception )
+        {
+
+        }
+
+        return false;
     }
 }

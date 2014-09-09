@@ -68,6 +68,15 @@ class Country extends \QUI\QDOM
     }
 
     /**
+     * Return the ISO 4217 Currency Code
+     * @return String
+     */
+    public function getCurrencyCode()
+    {
+        return $this->getAttribute( 'ISO 4217 Currency Code' );
+    }
+
+    /**
      * Return the name of the country
      * observed System_Locale
      *
