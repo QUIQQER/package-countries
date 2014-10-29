@@ -47,9 +47,9 @@ Entwickler
 --------
 
 Das quiqqer/countries Paket bringt ein Country Select Box Control mit.
-Dieses Control baut ein \<select> Element mit allen Löndern auf.
+Dieses Control baut ein \<select> Element mit allen Ländern auf.
 
-{control control="\QUI\Countries\Controls\Select" selected="DE"}
+    {control control="\QUI\Countries\Controls\Select" selected="DE"}
 
 
 *Attribute*
