@@ -6,15 +6,21 @@
 
 namespace QUI\Countries\Controls;
 
+use QUI;
+use QUI\Countries\Manager;
+
 /**
  * Country Select field
  *
  * @author www.pcsg.de (Henning Leutz)
+ * @package quiqqer/countries
  */
-
-class Select extends \QUI\Control
+class Select extends QUI\Control
 {
-
+    /**
+     * constructor
+     * @param array $attributes
+     */
     public function __construct($attributes=array())
     {
         // default
@@ -34,7 +40,7 @@ class Select extends \QUI\Control
      */
     public function create()
     {
-        $countries = \QUI\Countries\Manager::getList();
+        $countries = Manager::getList();
         $result    = '<select name="">';
 
         $selected = $this->getAttribute('selected');

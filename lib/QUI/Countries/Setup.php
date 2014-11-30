@@ -6,14 +6,15 @@
 
 namespace QUI\Countries;
 
+use QUI;
+
 /**
  * Country Manager
  *
  * @author www.pcsg.de (Henning Leutz)
- * @package com.pcsg.qui.utils.countries
+ * @package quiqqer/countries
  */
-
-class Setup extends \QUI\QDOM
+class Setup extends QUI\QDOM
 {
     /**
      * Country setup
@@ -24,14 +25,14 @@ class Setup extends \QUI\QDOM
         $path = str_replace( 'lib/QUI/Countries/Setup.php', '', __FILE__ );
 
         $db_countries = $path .'db/countries.sql';
-        $PDO          = \QUI::getDataBase()->getPDO();
+        $PDO          = QUI::getDataBase()->getPDO();
 
         if ( !file_exists( $db_countries ) ) {
             return;
         }
 
         $sql = file_get_contents( $db_countries );
-        $sql = str_replace( '{$TABLE}', \QUI\Countries\Manager::Table(), $sql );
+        $sql = str_replace( '{$TABLE}', Manager::Table(), $sql );
         $sql = explode( ';', $sql );
 
         foreach ( $sql as $query )

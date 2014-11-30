@@ -6,18 +6,20 @@
 
 namespace QUI\Countries;
 
+use QUI;
+
 /**
  * Country Manager
  *
  * @author www.pcsg.de (Henning Leutz)
+ * @package quiqqer/countries
  */
-
-class Manager extends \QUI\QDOM
+class Manager extends QUI\QDOM
 {
     /**
      * Return the real table name
      *
-     * @return String
+     * @return string
      */
     static function Table()
     {
@@ -28,7 +30,8 @@ class Manager extends \QUI\QDOM
      * Get a country
      *
      * @param String $code - the country code
-     * @return \QUI\Countries\Country
+     * @return QUI\Countries\Country
+     * @throws QUI\Exception
      *
      * @example
      * $Country = \QUI\Countries\Manager::get('de');
@@ -39,32 +42,32 @@ class Manager extends \QUI\QDOM
         $result = \QUI::getDataBase()->fetch(array(
             'from'  => self::Table(),
             'where' => array(
-                'countries_iso_code_2' => \QUI\Utils\String::toUpper( $code )
+                'countries_iso_code_2' => QUI\Utils\String::toUpper( $code )
             ),
             'limit' => '1'
         ));
 
         if ( !isset( $result[0] ) ) {
-            throw new \QUI\Exception( 'Das Land wurde nicht gefunden', 404 );
+            throw new QUI\Exception( 'Das Land wurde nicht gefunden', 404 );
         }
 
-        return new \QUI\Countries\Country( $result[0] );
+        return new Country( $result[0] );
     }
 
     /**
      * Get the complete country list
      *
-     * @return Array
+     * @return array
      */
     static function getList()
     {
         $order = 'countries_name ASC';
 
-        if ( \QUI::getLocale()->getCurrent() === 'en' ) {
+        if ( QUI::getLocale()->getCurrent() === 'en' ) {
             $order = 'en ASC';
         }
 
-        $result = \QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch(array(
             'from'  => self::Table(),
             'order' => $order
         ));
@@ -72,7 +75,7 @@ class Manager extends \QUI\QDOM
         $countries = array();
 
         foreach ( $result as $entry ) {
-            $countries[] = new \QUI\Countries\Country( $entry );
+            $countries[] = new Country( $entry );
         }
 
         return $countries;
@@ -81,8 +84,8 @@ class Manager extends \QUI\QDOM
     /**
      * Exist the country code in the database?
      *
-     * @param String $code - Country code
-     * @return Bool
+     * @param string $code - Country code
+     * @return bool
      */
     static function existsCountryCode($code)
     {
@@ -92,7 +95,7 @@ class Manager extends \QUI\QDOM
 
             return true;
 
-        } catch ( \QUI\Exception $Exception )
+        } catch ( QUI\Exception $Exception )
         {
 
         }

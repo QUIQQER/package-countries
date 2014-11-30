@@ -6,13 +6,15 @@
 
 namespace QUI\Countries;
 
+use QUI;
+
 /**
  * A Country
  *
  * @author www.pcsg.de (Henning Leutz)
- * @package com.pcsg.qui.utils.countries
+ * @package quiqqer/countries
  */
-class Country extends \QUI\QDOM
+class Country extends QUI\QDOM
 {
     /**
      * construcor
@@ -22,24 +24,25 @@ class Country extends \QUI\QDOM
      * $Country = \QUI\Countries\Manager::get('de');
      * $Country->getName()
      *
-     * @param Array $params
+     * @param array $params
+     * @throws QUI\Exception
      */
     public function __construct($params)
     {
         if ( !isset( $params['countries_iso_code_2'] ) ) {
-            throw new \QUI\Exception( 'Parameter countries_iso_code_2 fehlt' );
+            throw new QUI\Exception( 'Parameter countries_iso_code_2 fehlt' );
         }
 
         if ( !isset( $params['countries_iso_code_3'] ) ) {
-            throw new \QUI\Exception( 'Parameter countries_iso_code_3 fehlt' );
+            throw new QUI\Exception( 'Parameter countries_iso_code_3 fehlt' );
         }
 
         if ( !isset( $params['countries_name'] ) ) {
-            throw new \QUI\Exception( 'Parameter countries_name fehlt' );
+            throw new QUI\Exception( 'Parameter countries_name fehlt' );
         }
 
         if ( !isset( $params['countries_id'] ) ) {
-            throw new \QUI\Exception( 'Parameter countries_id fehlt' );
+            throw new QUI\Exception( 'Parameter countries_id fehlt' );
         }
 
         parent::setAttributes( $params );
@@ -84,8 +87,8 @@ class Country extends \QUI\QDOM
      */
     public function getName()
     {
-        if ( $this->existsAttribute( \QUI::getLocale()->getCurrent() ) ) {
-            return $this->getAttribute( \QUI::getLocale()->getCurrent() );
+        if ( $this->existsAttribute( QUI::getLocale()->getCurrent() ) ) {
+            return $this->getAttribute( QUI::getLocale()->getCurrent() );
         }
 
         return $this->getAttribute( 'countries_name' );
