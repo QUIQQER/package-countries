@@ -2,7 +2,7 @@
     "name" : "quiqqer/countries",
     "type" : "quiqqer-library",
     "description" : "Provided countries for QUIQQER.",
-    "version" : "dev-dev",
+    "version" : "0.9.0",
     "license" : "GPL-2.0+",
 
     "authors" : [{
@@ -17,8 +17,8 @@
     },
 
     "require": {
-        "quiqqer/quiqqer" : "*",
-        "quiqqer/utils" : "*@dev"
+        "quiqqer/quiqqer" : "1.*",
+        "quiqqer/utils" : "*0.9.*"
     },
 
     "autoload": {
