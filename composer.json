@@ -18,7 +18,7 @@
 
     "require": {
         "quiqqer/quiqqer" : "1.*",
-        "quiqqer/utils" : "0.9.*"
+        "quiqqer/utils" : "1.*"
     },
 
     "autoload": {
