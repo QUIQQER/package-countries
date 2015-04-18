@@ -11,7 +11,7 @@ use QUI;
 /**
  * Country Manager
  *
- * @author www.pcsg.de (Henning Leutz)
+ * @author  www.pcsg.de (Henning Leutz)
  * @package quiqqer/countries
  */
 class Manager extends QUI\QDOM
@@ -23,13 +23,14 @@ class Manager extends QUI\QDOM
      */
     static function Table()
     {
-        return QUI_DB_PRFX .'countries';
+        return QUI_DB_PRFX.'countries';
     }
 
     /**
      * Get a country
      *
      * @param String $code - the country code
+     *
      * @return QUI\Countries\Country
      * @throws QUI\Exception
      *
@@ -42,16 +43,16 @@ class Manager extends QUI\QDOM
         $result = \QUI::getDataBase()->fetch(array(
             'from'  => self::Table(),
             'where' => array(
-                'countries_iso_code_2' => QUI\Utils\String::toUpper( $code )
+                'countries_iso_code_2' => QUI\Utils\String::toUpper($code)
             ),
             'limit' => '1'
         ));
 
-        if ( !isset( $result[0] ) ) {
-            throw new QUI\Exception( 'Das Land wurde nicht gefunden', 404 );
+        if (!isset($result[0])) {
+            throw new QUI\Exception('Das Land wurde nicht gefunden', 404);
         }
 
-        return new Country( $result[0] );
+        return new Country($result[0]);
     }
 
     /**
@@ -63,7 +64,7 @@ class Manager extends QUI\QDOM
     {
         $order = 'countries_name ASC';
 
-        if ( QUI::getLocale()->getCurrent() === 'en' ) {
+        if (QUI::getLocale()->getCurrent() === 'en') {
             $order = 'en ASC';
         }
 
@@ -74,8 +75,8 @@ class Manager extends QUI\QDOM
 
         $countries = array();
 
-        foreach ( $result as $entry ) {
-            $countries[] = new Country( $entry );
+        foreach ($result as $entry) {
+            $countries[] = new Country($entry);
         }
 
         return $countries;
@@ -85,18 +86,17 @@ class Manager extends QUI\QDOM
      * Exist the country code in the database?
      *
      * @param string $code - Country code
+     *
      * @return bool
      */
     static function existsCountryCode($code)
     {
-        try
-        {
-            self::get( $code );
+        try {
+            self::get($code);
 
             return true;
 
-        } catch ( QUI\Exception $Exception )
-        {
+        } catch (QUI\Exception $Exception) {
 
         }
 

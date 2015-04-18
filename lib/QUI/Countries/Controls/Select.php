@@ -12,16 +12,17 @@ use QUI\Countries\Manager;
 /**
  * Country Select field
  *
- * @author www.pcsg.de (Henning Leutz)
+ * @author  www.pcsg.de (Henning Leutz)
  * @package quiqqer/countries
  */
 class Select extends QUI\Control
 {
     /**
      * constructor
+     *
      * @param array $attributes
      */
-    public function __construct($attributes=array())
+    public function __construct($attributes = array())
     {
         // default
         $this->setAttributes(array(
@@ -29,11 +30,12 @@ class Select extends QUI\Control
             'selected' => ''
         ));
 
-        $this->setAttributes( $attributes );
+        $this->setAttributes($attributes);
     }
 
     /**
      * (non-PHPdoc)
+     *
      * @see \QUI\Control::create()
      *
      * @return String
@@ -41,21 +43,20 @@ class Select extends QUI\Control
     public function create()
     {
         $countries = Manager::getList();
-        $result    = '<select name="">';
+        $result = '<select name="">';
 
         $selected = $this->getAttribute('selected');
 
         /* @var $Country \QUI\Countries\Country */
-        foreach ( $countries as $Country )
-        {
-            $result .= '<option value="'. $Country->getCode() .'"';
+        foreach ($countries as $Country) {
+            $result .= '<option value="'.$Country->getCode().'"';
 
-            if ( $Country->getCode() == $selected ) {
+            if ($Country->getCode() == $selected) {
                 $result .= ' selected="selected"';
             }
 
             $result .= '>';
-                $result .= $Country->getName();
+            $result .= $Country->getName();
             $result .= '</option>';
         }
 

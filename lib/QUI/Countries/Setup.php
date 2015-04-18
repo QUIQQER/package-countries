@@ -11,7 +11,7 @@ use QUI;
 /**
  * Country Manager
  *
- * @author www.pcsg.de (Henning Leutz)
+ * @author  www.pcsg.de (Henning Leutz)
  * @package quiqqer/countries
  */
 class Setup extends QUI\QDOM
@@ -22,28 +22,27 @@ class Setup extends QUI\QDOM
     static function setup()
     {
         // Countries
-        $path = str_replace( 'lib/QUI/Countries/Setup.php', '', __FILE__ );
+        $path = str_replace('lib/QUI/Countries/Setup.php', '', __FILE__);
 
-        $db_countries = $path .'db/countries.sql';
-        $PDO          = QUI::getDataBase()->getPDO();
+        $db_countries = $path.'db/countries.sql';
+        $PDO = QUI::getDataBase()->getPDO();
 
-        if ( !file_exists( $db_countries ) ) {
+        if (!file_exists($db_countries)) {
             return;
         }
 
-        $sql = file_get_contents( $db_countries );
-        $sql = str_replace( '{$TABLE}', Manager::Table(), $sql );
-        $sql = explode( ';', $sql );
+        $sql = file_get_contents($db_countries);
+        $sql = str_replace('{$TABLE}', Manager::Table(), $sql);
+        $sql = explode(';', $sql);
 
-        foreach ( $sql as $query )
-        {
-            $query = trim( $query );
+        foreach ($sql as $query) {
+            $query = trim($query);
 
-            if ( empty( $query ) ) {
+            if (empty($query)) {
                 continue;
             }
 
-            $PDO->exec( $query );
+            $PDO->exec($query);
         }
     }
 }
