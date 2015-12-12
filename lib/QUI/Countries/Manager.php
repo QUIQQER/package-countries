@@ -21,9 +21,9 @@ class Manager extends QUI\QDOM
      *
      * @return string
      */
-    static function Table()
+    public static function TABLE()
     {
-        return QUI_DB_PRFX.'countries';
+        return QUI_DB_PRFX . 'countries';
     }
 
     /**
@@ -38,10 +38,10 @@ class Manager extends QUI\QDOM
      * $Country = \QUI\Countries\Manager::get('de');
      * $Country->getName()
      */
-    static function get($code)
+    public static function get($code)
     {
         $result = \QUI::getDataBase()->fetch(array(
-            'from'  => self::Table(),
+            'from' => self::TABLE(),
             'where' => array(
                 'countries_iso_code_2' => QUI\Utils\String::toUpper($code)
             ),
@@ -60,7 +60,7 @@ class Manager extends QUI\QDOM
      *
      * @return array
      */
-    static function getList()
+    public static function getList()
     {
         $order = 'countries_name ASC';
 
@@ -69,7 +69,7 @@ class Manager extends QUI\QDOM
         }
 
         $result = QUI::getDataBase()->fetch(array(
-            'from'  => self::Table(),
+            'from' => self::TABLE(),
             'order' => $order
         ));
 
@@ -89,7 +89,7 @@ class Manager extends QUI\QDOM
      *
      * @return bool
      */
-    static function existsCountryCode($code)
+    public static function existsCountryCode($code)
     {
         try {
             self::get($code);
@@ -97,7 +97,6 @@ class Manager extends QUI\QDOM
             return true;
 
         } catch (QUI\Exception $Exception) {
-
         }
 
         return false;

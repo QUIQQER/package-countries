@@ -19,13 +19,13 @@ class Setup extends QUI\QDOM
     /**
      * Country setup
      */
-    static function setup()
+    public static function setup()
     {
         // Countries
         $path = str_replace('lib/QUI/Countries/Setup.php', '', __FILE__);
 
-        $db_countries = $path.'db/countries.sql';
-        $PDO = QUI::getDataBase()->getPDO();
+        $db_countries = $path . 'db/countries.sql';
+        $PDO          = QUI::getDataBase()->getPDO();
 
         if (!file_exists($db_countries)) {
             return;

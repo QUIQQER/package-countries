@@ -26,7 +26,7 @@ class Select extends QUI\Control
     {
         // default
         $this->setAttributes(array(
-            'name'     => 'countries',
+            'name' => 'countries',
             'selected' => ''
         ));
 
@@ -43,13 +43,13 @@ class Select extends QUI\Control
     public function create()
     {
         $countries = Manager::getList();
-        $result = '<select name="">';
+        $result    = '<select name="">';
 
         $selected = $this->getAttribute('selected');
 
         /* @var $Country \QUI\Countries\Country */
         foreach ($countries as $Country) {
-            $result .= '<option value="'.$Country->getCode().'"';
+            $result .= '<option value="' . $Country->getCode() . '"';
 
             if ($Country->getCode() == $selected) {
                 $result .= ' selected="selected"';
