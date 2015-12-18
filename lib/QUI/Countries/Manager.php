@@ -43,7 +43,7 @@ class Manager extends QUI\QDOM
         $result = \QUI::getDataBase()->fetch(array(
             'from' => self::TABLE(),
             'where' => array(
-                'countries_iso_code_2' => QUI\Utils\String::toUpper($code)
+                'countries_iso_code_2' => QUI\Utils\StringHelper::toUpper($code)
             ),
             'limit' => '1'
         ));
