@@ -9,7 +9,7 @@ namespace QUI\Countries;
 use QUI;
 
 /**
- * Country Manager
+ * Country setup
  *
  * @author  www.pcsg.de (Henning Leutz)
  * @package quiqqer/countries
@@ -18,6 +18,7 @@ class Setup extends QUI\QDOM
 {
     /**
      * Country setup
+     * Import the database
      */
     public static function setup()
     {
@@ -32,7 +33,7 @@ class Setup extends QUI\QDOM
         }
 
         $sql = file_get_contents($db_countries);
-        $sql = str_replace('{$TABLE}', Manager::Table(), $sql);
+        $sql = str_replace('{$TABLE}', Manager::getDataBaseTableName(), $sql);
         $sql = explode(';', $sql);
 
         foreach ($sql as $query) {

@@ -12,7 +12,7 @@ use QUI;
  * Country Manager
  *
  * @author  www.pcsg.de (Henning Leutz)
- * @package quiqqer/countries
+ * @package QUI\Countries
  */
 class Manager extends QUI\QDOM
 {
@@ -21,9 +21,9 @@ class Manager extends QUI\QDOM
      *
      * @return string
      */
-    public static function TABLE()
+    public static function getDataBaseTableName()
     {
-        return QUI_DB_PRFX . 'countries';
+        return QUI::getDBTableName('countries');
     }
 
     /**
@@ -41,7 +41,7 @@ class Manager extends QUI\QDOM
     public static function get($code)
     {
         $result = QUI::getDataBase()->fetch(array(
-            'from' => self::TABLE(),
+            'from' => self::getDataBaseTableName(),
             'where' => array(
                 'countries_iso_code_2' => QUI\Utils\StringHelper::toUpper($code)
             ),
@@ -69,7 +69,7 @@ class Manager extends QUI\QDOM
         }
 
         $result = QUI::getDataBase()->fetch(array(
-            'from' => self::TABLE(),
+            'from' => self::getDataBaseTableName(),
             'order' => $order
         ));
 

@@ -12,7 +12,7 @@ use QUI;
  * A Country
  *
  * @author  www.pcsg.de (Henning Leutz)
- * @package quiqqer/countries
+ * @package QUI\Countries
  */
 class Country extends QUI\QDOM
 {
@@ -53,9 +53,9 @@ class Country extends QUI\QDOM
      * Return the country code
      * iso_code_2 or iso_code_2
      *
-     * @param String $type - countries_iso_code_2 or countries_iso_code_3
+     * @param string $type - countries_iso_code_2 or countries_iso_code_3
      *
-     * @return String
+     * @return string
      */
     public function getCode($type = 'countries_iso_code_2')
     {
@@ -74,7 +74,7 @@ class Country extends QUI\QDOM
     /**
      * Return the ISO 4217 Currency Code
      *
-     * @return String
+     * @return string
      */
     public function getCurrencyCode()
     {
@@ -85,12 +85,14 @@ class Country extends QUI\QDOM
      * Return the name of the country
      * observed System_Locale
      *
-     * @return String
+     * @return string
      */
     public function getName()
     {
-        if ($this->existsAttribute(QUI::getLocale()->getCurrent())) {
-            return $this->getAttribute(QUI::getLocale()->getCurrent());
+        $localeVar = 'country.' . $this->getCode();
+
+        if (QUI::getLocale()->exists('quiqqer/countries', $localeVar)) {
+            return QUI::getLocale()->get('quiqqer/countries', $localeVar);
         }
 
         return $this->getAttribute('countries_name');
