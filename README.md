@@ -14,7 +14,7 @@ Features
 
 - Mehr als 200 Länder
 - Zu jedem Land die ISO Codes
-- PHP Country Verwaltungs Klasse
+- PHP Country Verwaltungs-Klasse
 
 
 Installation
@@ -26,7 +26,7 @@ Der Paketname ist: quiqqer/countries
 Mitwirken
 ----------
 
-- Issue Tracker:
+- Issue Tracker: https://dev.quiqqer.com/quiqqer/package-countries/issues
 - Source Code: https://dev.quiqqer.com/quiqqer/package-countries
 
 
@@ -40,7 +40,7 @@ Dann können Sie gerne an support@pcsg.de eine E-Mail schreiben.
 License
 -------
 
-GPL-2.0+
+MIT
 
 
 Entwickler

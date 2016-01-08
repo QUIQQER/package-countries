@@ -40,7 +40,7 @@ class Manager extends QUI\QDOM
      */
     public static function get($code)
     {
-        $result = \QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch(array(
             'from' => self::TABLE(),
             'where' => array(
                 'countries_iso_code_2' => QUI\Utils\StringHelper::toUpper($code)

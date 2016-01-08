@@ -30,7 +30,7 @@ class Select extends QUI\Control
             'selected' => ''
         ));
 
-        $this->setAttributes($attributes);
+        parent::__construct($attributes);
     }
 
     /**
