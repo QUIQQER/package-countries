@@ -83,6 +83,24 @@ class Manager extends QUI\QDOM
     }
 
     /**
+     * Return all available country codes
+     *
+     * @return array
+     */
+    public static function getAllCountryCodes()
+    {
+        $result    = array();
+        $countries = self::getList();
+
+        foreach ($countries as $Country) {
+            /* @var $Country Country */
+            $result[] = $Country->getCode();
+        }
+
+        return $result;
+    }
+
+    /**
      * Exist the country code in the database?
      *
      * @param string $code - Country code
