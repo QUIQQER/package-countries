@@ -15,57 +15,70 @@ class CountryTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($Country);
         $this->assertNotEmpty($Country->getCode());
         $this->assertNotEmpty($Country->getName());
-    }
-
-    public function testGetCode()
-    {
-        $Country = QUI\Countries\Manager::get('gb');
-
-        if ($Country->getCode('countries_iso_code_2')){
-            $this->assertEquals($Country->getCode('countries_iso_code_2'), 'GB');
-        }
-
-        if ($Country->getCode('countries_iso_code_3')){
-            $this->assertEquals($Country->getCode('countries_iso_code_3'), 'GBR');
-        }
-
-//        $this->setExpectedException('QUI\Exception');
-//        QUI\Countries\Manager::get('de');
-
 
         try {
 
-            QUI\Countries\Manager::get('de');
+            QUI\Countries\Manager::get('__');
 
-            $this->fail('sollte fehlschlagen');
+            $this->fail('Das sollte fehlschlagen');
 
         } catch (QUI\Exception $Exception) {
             $this->assertTrue(true);
         }
 
     }
-//
-//    public function testGetCurrencyCode()
-//    {
-//        $Country = QUI\Countries\Manager::get('de');
-//        $Currency = $Country->getCurrencyCode();
-//        $this->assertEquals($Currency, 'Euro');
-//
-//    }
+
+    public function test__construct()
+    {
+        $Country = QUI\Countries\Manager::get('nl');
+        if (!isset($params['countries_iso_code_2'])) {
+            $this->assertFalse( true);
+        }
+    }
+
+    public function testGetCode()
+    {
+        $Country = QUI\Countries\Manager::get('gb');
+
+        if ($Country->getAttribute('countries_iso_code_2')) {
+            $this->assertEquals($Country->getCode('countries_iso_code_2'), 'GB');
+        }
+
+        if ($Country->getAttribute('countries_iso_code_3')) {
+            $this->assertEquals($Country->getCode('countries_iso_code_3'), 'GBR');
+        }
+
+//        $this->setExpectedException('QUI\Exception');
+//        QUI\Countries\Manager::get('__');
+    }
+
+
+
+    public function testGetCurrencyCode()
+    {
+        $Country = QUI\Countries\Manager::get('de');
+        $currency = $Country->getCurrencyCode();
+
+//        var_dump($Country);
+//        var_dump($currency);
+        $this->assertEquals($currency, 'Euro');
+    }
 
     public function testGetName()
     {
         $Country = QUI\Countries\Manager::get('pl');
-        $code = $Country->getCode();
+        $code = $Country->getAttribute('countries_iso_code_2');
         $name = $Country->getName();
 
         $localeVar = 'country.' . $code;
 
         if (QUI::getLocale()->exists('quiqqer/countries', $localeVar)) {
-            $this->assertEquals($name, QUI::getLocale()->get('quiqqer/countries', 'irgendwas'));
+            $this->assertEquals($name, QUI::getLocale()->get('quiqqer/countries', $localeVar));
         }
 
-        // Hen! Hier kommt false trotzd update. Gibt die locale nicht?
+        // Hen! Hier kommt false (locale update gemacht).
         //var_dump(QUI::getLocale()->exists('quiqqer/countries', $localeVar));
+
+        $this->assertEquals($name, 'Polen');
     }
 }
