@@ -17,6 +17,13 @@ use QUI;
 class Manager extends QUI\QDOM
 {
     /**
+     * country stack
+     *
+     * @var array
+     */
+    private static $countries = array();
+
+    /**
      * Return the real table name
      *
      * @return string
@@ -40,8 +47,12 @@ class Manager extends QUI\QDOM
      */
     public static function get($code)
     {
+        if (isset(self::$countries[$code])) {
+            return self::$countries[$code];
+        }
+
         $result = QUI::getDataBase()->fetch(array(
-            'from' => self::getDataBaseTableName(),
+            'from'  => self::getDataBaseTableName(),
             'where' => array(
                 'countries_iso_code_2' => QUI\Utils\StringHelper::toUpper($code)
             ),
@@ -52,7 +63,9 @@ class Manager extends QUI\QDOM
             throw new QUI\Exception('Das Land wurde nicht gefunden', 404);
         }
 
-        return new Country($result[0]);
+        self::$countries[$code] = new Country($result[0]);
+
+        return self::$countries[$code];
     }
 
     /**
@@ -69,14 +82,25 @@ class Manager extends QUI\QDOM
         }
 
         $result = QUI::getDataBase()->fetch(array(
-            'from' => self::getDataBaseTableName(),
+            'from'  => self::getDataBaseTableName(),
             'order' => $order
         ));
 
         $countries = array();
 
         foreach ($result as $entry) {
-            $countries[] = new Country($entry);
+            $code = $entry['countries_iso_code_2'];
+
+            if (isset(self::$countries[$code])) {
+                $countries[] = self::$countries[$code];
+                continue;
+            }
+
+            $Country = new Country($entry);
+
+            self::$countries[$code] = $Country;
+
+            $countries[] = $Country;
         }
 
         return $countries;

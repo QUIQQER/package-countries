@@ -72,9 +72,10 @@ class Country extends QUI\QDOM
     }
 
     /**
-     * Return the ISO 4217 Currency Code
+     * Return the currency object
      *
-     * @return string
+     * @return QUI\ERP\Currency\Currency
+     * @todo not implemented
      */
     public function getCurrencyCode()
     {
