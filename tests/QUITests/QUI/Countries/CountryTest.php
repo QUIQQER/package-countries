@@ -55,8 +55,6 @@ class CountryTest extends \PHPUnit_Framework_TestCase
         $Country  = QUI\Countries\Manager::get('de');
         $currency = $Country->getCurrencyCode();
 
-//        var_dump($Country);
-//        var_dump($currency);
         $this->assertEquals($currency, 'EUR');
     }
 
