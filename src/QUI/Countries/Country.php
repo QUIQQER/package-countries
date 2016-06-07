@@ -80,12 +80,21 @@ class Country extends QUI\QDOM
             default:
             case 'countries_iso_code_2':
                 return $this->getAttribute('countries_iso_code_2');
-                break;
 
             case 'countries_iso_code_3':
                 return $this->getAttribute('countries_iso_code_3');
-                break;
         }
+    }
+
+    /**
+     * Return the country code in lowercase
+     *
+     * @param string $type
+     * @return string
+     */
+    public function getCodeToLower($type = 'countries_iso_code_2')
+    {
+        return strtolower($this->getCode($type));
     }
 
     /**
@@ -156,5 +165,16 @@ class Country extends QUI\QDOM
         return array_map(function ($data) {
             return $data['language'];
         }, $this->languages);
+    }
+
+    /**
+     * Return the locale string of the country
+     * en_US, en_GB, de_DE, de_AT
+     *
+     * @return string
+     */
+    public function getLocaleCode()
+    {
+        return strtolower($this->getLang()) . '_' . strtoupper($this->getCode());
     }
 }
