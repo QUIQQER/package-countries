@@ -83,4 +83,11 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($name, 'Poland');
     }
+
+    public function testGetLanguages()
+    {
+        $Country = QUI\Countries\Manager::get('de');
+
+        $this->assertNotEmpty($Country->getLanguages());
+    }
 }

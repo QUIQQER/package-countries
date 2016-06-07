@@ -17,6 +17,11 @@ use QUI;
 class Country extends QUI\QDOM
 {
     /**
+     * @var array
+     */
+    protected $languages = array();
+
+    /**
      * construcor
      * If you want a country, use the manager
      *
@@ -52,6 +57,10 @@ class Country extends QUI\QDOM
 
         if (!isset($params['currency'])) {
             throw new QUI\Exception('Parameter currency fehlt');
+        }
+
+        if (is_string($params['languages'])) {
+            $this->languages = json_decode($params['languages'], true);
         }
 
         parent::setAttributes($params);
@@ -99,7 +108,7 @@ class Country extends QUI\QDOM
     {
         // currency installed?
         QUI::getPackage('quiqqer/currency');
-        
+
         try {
             return QUI\ERP\Currency\Handler::getCurrency(
                 $this->getCurrencyCode()
@@ -127,15 +136,25 @@ class Country extends QUI\QDOM
         return $this->getAttribute('countries_name');
     }
 
-
+    /**
+     * Return the country language
+     *
+     * @return mixed
+     */
     public function getLang()
     {
-
+        return $this->getAttribute('language');
     }
 
-
+    /**
+     * Return all languages in the country
+     *
+     * @return array
+     */
     public function getLanguages()
     {
-
+        return array_map(function ($data) {
+            return $data['language'];
+        }, $this->languages);
     }
 }
