@@ -13,8 +13,6 @@ CREATE TABLE IF NOT EXISTS `{$TABLE}` (
   `countries_iso_code_2` char(2) COLLATE utf8_unicode_ci NOT NULL,
   `countries_iso_code_3` char(3) COLLATE utf8_unicode_ci NOT NULL,
   `address_format_id` int(11) NOT NULL,
-  `de` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `en` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`countries_id`),
   KEY `IDX_COUNTRIES_NAME` (`countries_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=240 ;
@@ -23,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `{$TABLE}` (
 -- Daten für Tabelle `{$TABLE}`
 --
 
-INSERT INTO `{$TABLE}` (`countries_id`, `countries_name`, `countries_iso_code_2`, `countries_iso_code_3`, `address_format_id`, `de`, `en`) VALUES
+INSERT INTO `{$TABLE}` (`countries_id`, `countries_name`, `countries_iso_code_2`, `countries_iso_code_3`, `address_format_id`) VALUES
 (1, 'Afghanistan', 'AF', 'AFG', 1, 'Afghanistan', 'Afghanistan'),
 (2, 'Albanien', 'AL', 'ALB', 1, 'Albanien', 'Albania'),
 (3, 'Algerien', 'DZ', 'DZA', 1, 'Algerien', 'Algeria'),

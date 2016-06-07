@@ -23,27 +23,50 @@ class Setup extends QUI\QDOM
     public static function setup()
     {
         // Countries
-        $path = str_replace('lib/QUI/Countries/Setup.php', '', __FILE__);
+        $path  = str_replace('src/QUI/Countries/Setup.php', '', __FILE__);
+        $data  = json_decode(file_get_contents($path . '/db/intl.json'), true);
+        $table = Manager::getDataBaseTableName();
 
-        $db_countries = $path . 'db/countries.sql';
-        $PDO          = QUI::getDataBase()->getPDO();
+        $Table = QUI::getDataBase()->table();
+        $Table->delete($table);
 
-        if (!file_exists($db_countries)) {
-            return;
-        }
+        $Table->addColumn($table, array(
+            'countries_id'         => 'int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            'countries_iso_code_2' => 'char(2) NOT NULL',
+            'countries_iso_code_3' => 'char(3) NOT NULL',
+            'numeric_code'         => 'char(4) NOT NULL',
+            'language'             => 'char(3) NOT NULL',
+            'languages'            => 'text NOT NULL',
+            'currency'             => 'char(3) NOT NULL'
+        ));
 
-        $sql = file_get_contents($db_countries);
-        $sql = str_replace('{$TABLE}', Manager::getDataBaseTableName(), $sql);
-        $sql = explode(';', $sql);
+        foreach ($data as $country => $entry) {
+            $language = '';
 
-        foreach ($sql as $query) {
-            $query = trim($query);
-
-            if (empty($query)) {
-                continue;
+            if (!isset($entry['numeric_code'])) {
+                $entry['numeric_code'] = '';
             }
 
-            $PDO->exec($query);
+            if (!isset($entry['three_letter_code'])) {
+                $entry['three_letter_code'] = '';
+            }
+
+            if (isset($entry['language'][0])) {
+                $language = $entry['language'][0];
+            }
+
+            if (!isset($entry['currency_code'])) {
+                $entry['currency_code'] = '';
+            }
+
+            QUI::getDataBase()->insert($table, array(
+                'countries_iso_code_2' => $country,
+                'countries_iso_code_3' => $entry['three_letter_code'],
+                'numeric_code'         => $entry['numeric_code'],
+                'language'             => $language,
+                'languages'            => json_encode($entry['languages']),
+                'currency'             => $entry['currency_code']
+            ));
         }
     }
 }

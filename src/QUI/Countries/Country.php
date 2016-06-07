@@ -38,12 +38,20 @@ class Country extends QUI\QDOM
             throw new QUI\Exception('Parameter countries_iso_code_3 fehlt');
         }
 
-        if (!isset($params['countries_name'])) {
-            throw new QUI\Exception('Parameter countries_name fehlt');
-        }
-
         if (!isset($params['countries_id'])) {
             throw new QUI\Exception('Parameter countries_id fehlt');
+        }
+
+        if (!isset($params['language'])) {
+            throw new QUI\Exception('Parameter language fehlt');
+        }
+
+        if (!isset($params['languages'])) {
+            throw new QUI\Exception('Parameter languages fehlt');
+        }
+
+        if (!isset($params['currency'])) {
+            throw new QUI\Exception('Parameter currency fehlt');
         }
 
         parent::setAttributes($params);
@@ -78,7 +86,27 @@ class Country extends QUI\QDOM
      */
     public function getCurrencyCode()
     {
-        return $this->getAttribute('ISO 4217 Currency Code');
+        return $this->getAttribute('currency');
+    }
+
+    /**
+     * Return the currency of the country
+     *
+     * @return QUI\ERP\Currency\Currency
+     */
+    public function getCurrency()
+    {
+        // currency installed?
+        QUI::getPackage('quiqqer/currency');
+        
+        try {
+            return QUI\ERP\Currency\Handler::getCurrency(
+                $this->getCurrencyCode()
+            );
+        } catch (QUI\Exception $Exception) {
+        }
+
+        return QUI\ERP\Currency\Handler::getDefaultCurrency();
     }
 
     /**
@@ -96,5 +124,17 @@ class Country extends QUI\QDOM
         }
 
         return $this->getAttribute('countries_name');
+    }
+
+
+    public function getLang()
+    {
+
+    }
+
+
+    public function getLanguages()
+    {
+
     }
 }
