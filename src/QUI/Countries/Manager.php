@@ -34,6 +34,21 @@ class Manager extends QUI\QDOM
     }
 
     /**
+     * Chceks if Mixed is a country
+     *
+     * @param mixed $Mixed
+     * @return boolean
+     */
+    public static function isCountry($Mixed)
+    {
+        if (!$Mixed) {
+            return false;
+        }
+
+        return get_class($Mixed) == Country::class;
+    }
+
+    /**
      * Get a country
      *
      * @param String $code - the country code
@@ -75,15 +90,9 @@ class Manager extends QUI\QDOM
      */
     public static function getList()
     {
-        $order = 'countries_name ASC';
-
-        if (QUI::getLocale()->getCurrent() === 'en') {
-            $order = 'en ASC';
-        }
-
         $result = QUI::getDataBase()->fetch(array(
             'from'  => self::getDataBaseTableName(),
-            'order' => $order
+            'order' => 'countries_iso_code_2 ASC'
         ));
 
         $countries = array();
