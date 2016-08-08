@@ -146,7 +146,6 @@ class Manager extends QUI\QDOM
             self::get($code);
 
             return true;
-
         } catch (QUI\Exception $Exception) {
         }
 
