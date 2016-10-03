@@ -4,7 +4,7 @@ QUIQQER Länder Paket
 
 Das Paket stellt mehr als 200 Länder mit seinen dazugehörigen Ländercodes zur Verfügung.
 
-Packetname:
+Paketname:
 
     quiqqer/countries
 
