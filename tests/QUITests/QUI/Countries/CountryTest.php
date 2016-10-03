@@ -20,11 +20,9 @@ class CountryTest extends \PHPUnit_Framework_TestCase
             QUI\Countries\Manager::get('__');
 
             $this->fail('Das sollte fehlschlagen');
-
         } catch (QUI\Exception $Exception) {
             $this->assertTrue(true);
         }
-
     }
 
     public function testConstruct()
@@ -44,7 +42,6 @@ class CountryTest extends \PHPUnit_Framework_TestCase
         if ($Country->getAttribute('countries_iso_code_3')) {
             $this->assertEquals($Country->getCode('countries_iso_code_3'), 'GBR');
         }
-
 //        $this->setExpectedException('QUI\Exception');
 //        QUI\Countries\Manager::get('__');
     }
