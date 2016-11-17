@@ -59,14 +59,22 @@ class Setup extends QUI\QDOM
                 $entry['currency_code'] = '';
             }
 
-            QUI::getDataBase()->insert($table, array(
-                'countries_iso_code_2' => $country,
-                'countries_iso_code_3' => $entry['three_letter_code'],
-                'numeric_code'         => $entry['numeric_code'],
-                'language'             => $language,
-                'languages'            => json_encode($entry['languages']),
-                'currency'             => $entry['currency_code']
-            ));
+            if (strlen($language) > 3) {
+                continue;
+            }
+
+            try {
+                QUI::getDataBase()->insert($table, array(
+                    'countries_iso_code_2' => $country,
+                    'countries_iso_code_3' => $entry['three_letter_code'],
+                    'numeric_code'         => $entry['numeric_code'],
+                    'language'             => $language,
+                    'languages'            => json_encode($entry['languages']),
+                    'currency'             => $entry['currency_code']
+                ));
+            } catch (QUI\Database\Exception $Exception) {
+                QUI\System\Log::addWarning($Exception->getMessage());
+            }
         }
     }
 }
