@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <locales>
     <groups name="quiqqer/countries" datatype="php,js">
+        <locale name="package.title">
+            <de><![CDATA[QUIQQER - Countries]]></de>
+            <en><![CDATA[QUIQQER - Countries]]></en>
+        </locale>
+        <locale name="package.description">
+            <de><![CDATA[Erweitert QUIQQER um eine Länderliste und Länderobjekte]]></de>
+            <en><![CDATA[Expanded QUIQQER with a country list and country objects]]></en>
+        </locale>
+
         <locale name="country.001">
             <de><![CDATA[Welt]]></de>
 
