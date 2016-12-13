@@ -132,14 +132,19 @@ class Country extends QUI\QDOM
      * Return the name of the country
      * observed System_Locale
      *
+     * @param QUI\Locale $Locale (optional) - Locale object that is used for the name translation [default: \QUI::getLocale()]
      * @return string
      */
-    public function getName()
+    public function getName($Locale = null)
     {
+        if (is_null($Locale)) {
+            $Locale = QUI::getLocale();
+        }
+
         $localeVar = 'country.' . $this->getCode();
 
-        if (QUI::getLocale()->exists('quiqqer/countries', $localeVar)) {
-            return QUI::getLocale()->get('quiqqer/countries', $localeVar);
+        if ($Locale->exists('quiqqer/countries', $localeVar)) {
+            return $Locale->get('quiqqer/countries', $localeVar);
         }
 
         return $this->getAttribute('countries_name');
