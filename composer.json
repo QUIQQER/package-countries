@@ -2,7 +2,7 @@
     "name" : "quiqqer/countries",
     "type" : "quiqqer-library",
     "description" : "Provided countries for QUIQQER.",
-    "version" : "dev-master",
+    "version" : "1.0.0",
     "license" : "GPL-2.0+",
 
     "authors" : [{
