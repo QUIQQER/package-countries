@@ -52,6 +52,7 @@ class Manager extends QUI\QDOM
      * Get a country
      *
      * @param String $code - the country code
+     * @param string $type (optional) - type of code ("countries_iso_code_2" or "countries_iso_code_3")
      *
      * @return QUI\Countries\Country
      * @throws QUI\Exception
@@ -60,7 +61,7 @@ class Manager extends QUI\QDOM
      * $Country = \QUI\Countries\Manager::get('de');
      * $Country->getName()
      */
-    public static function get($code)
+    public static function get($code, $type = 'countries_iso_code_2')
     {
         if (isset(self::$countries[$code])) {
             return self::$countries[$code];
@@ -69,7 +70,7 @@ class Manager extends QUI\QDOM
         $result = QUI::getDataBase()->fetch(array(
             'from'  => self::getDataBaseTableName(),
             'where' => array(
-                'countries_iso_code_2' => QUI\Utils\StringHelper::toUpper($code)
+                $type => QUI\Utils\StringHelper::toUpper($code)
             ),
             'limit' => '1'
         ));
