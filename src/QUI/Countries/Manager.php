@@ -117,6 +117,29 @@ class Manager extends QUI\QDOM
     }
 
     /**
+     * Return the countries in sorted order
+     *
+     * @param callable|null $sort - optional, sorting function
+     * @return array
+     */
+    public static function getSortedList($sort = null)
+    {
+        $countries = self::getList();
+
+        if ($sort === null) {
+            $sort = function ($CountryA, $CountryB) {
+                /* @var $CountryA Country */
+                /* @var $CountryB Country */
+                return strnatcmp($CountryA->getName(), $CountryB->getName());
+            };
+        }
+
+        usort($countries, $sort);
+
+        return $countries;
+    }
+
+    /**
      * Return all available country codes
      *
      * @return array
