@@ -22,7 +22,7 @@ function package_quiqqer_countries_ajax_getCountries($lang)
     $Locale = new \QUI\Locale();
     $Locale->setCurrent($lang);
 
-    $list      = Manager::getList();
+    $list      = Manager::getSortedList();
     $countries = array();
 
     /** @var \QUI\Countries\Country $Country */
