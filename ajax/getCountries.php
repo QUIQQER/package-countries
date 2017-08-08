@@ -19,7 +19,7 @@ QUI::$Ajax->registerFunction(
             $lang = QUI::getUserBySession()->getLocale()->getCurrent();
         }
 
-        $cacheName = 'quiqqer/countries/list/' . $lang;
+        $cacheName = 'quiqqer/countries/list/'.$lang;
 
         try {
             return CacheManager::get($cacheName);
@@ -42,5 +42,5 @@ QUI::$Ajax->registerFunction(
         return $countries;
     },
     array('lang'),
-    'Permission::checkAdminUser'
+    false
 );

@@ -76,7 +76,7 @@ class Manager extends QUI\QDOM
         ));
 
         if (!isset($result[0])) {
-            throw new QUI\Exception('Das Land wurde nicht gefunden', 404);
+            throw new QUI\Exception('Das Land wurde nicht gefunden', 404); // #locale
         }
 
         self::$countries[$code] = new Country($result[0]);

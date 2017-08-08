@@ -24,5 +24,5 @@ QUI::$Ajax->registerFunction(
         return $Country->getAttributes();
     },
     array('countryCode'),
-    'Permission::checkAdminUser'
+    false
 );
