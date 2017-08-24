@@ -100,8 +100,7 @@ class Country extends QUI\QDOM
     /**
      * Return the currency object
      *
-     * @return QUI\ERP\Currency\Currency
-     * @todo not implemented
+     * @return string
      */
     public function getCurrencyCode()
     {
@@ -141,7 +140,7 @@ class Country extends QUI\QDOM
             $Locale = QUI::getLocale();
         }
 
-        $localeVar = 'country.' . $this->getCode();
+        $localeVar = 'country.'.$this->getCode();
 
         if ($Locale->exists('quiqqer/countries', $localeVar)) {
             return $Locale->get('quiqqer/countries', $localeVar);
@@ -180,6 +179,6 @@ class Country extends QUI\QDOM
      */
     public function getLocaleCode()
     {
-        return strtolower($this->getLang()) . '_' . strtoupper($this->getCode());
+        return strtolower($this->getLang()).'_'.strtoupper($this->getCode());
     }
 }
