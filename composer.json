@@ -1,29 +1,27 @@
 {
-    "name" : "quiqqer/countries",
-    "type" : "quiqqer-library",
-    "description" : "Provided countries for QUIQQER.",
-    "version" : "dev-dev",
-    "license" : "GPL-2.0+",
-
-    "authors" : [{
-        "name": "Henning Leutz",
-        "email": "leutz@pcsg.de",
-        "homepage": "http://www.pcsg.de",
-        "role": "Developer"
-    }],
-
-    "support" : {
-        "email" : "support@pcsg.de"
-    },
-
-    "require": {
-        "quiqqer/quiqqer" : "*",
-        "quiqqer/utils" : "*@dev"
-    },
-
-    "autoload": {
-        "psr-0" : {
-            "QUI" : "src/"
-        }
+  "name": "quiqqer/countries",
+  "type": "quiqqer-plugin",
+  "description": "Extend QUIQQER with a country database",
+  "version": "dev-dev",
+  "license": "",
+  "authors": [
+    {
+      "name": "Henning Leutz",
+      "email": "leutz@pcsg.de",
+      "homepage": "http://www.pcsg.de",
+      "role": "Developer"
     }
+  ],
+  "support": {
+    "email": "support@pcsg.de"
+  },
+  "require": {
+    "quiqqer/quiqqer": "*",
+    "quiqqer/utils": "*@dev"
+  },
+  "autoload": {
+    "psr-0": {
+      "QUI": "src/"
+    }
+  }
 }
