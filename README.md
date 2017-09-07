@@ -1,10 +1,11 @@
+![QUIQQER Countries](bin/images/Readme.jpg)
 
-QUIQQER Länder Paket
+QUIQQER Country package
 ========
 
-Das Paket stellt mehr als 200 Länder mit seinen dazugehörigen Ländercodes zur Verfügung.
+The package provides more than 200 countries with their corresponding country codes.
 
-Paketname:
+Package name:
 
     quiqqer/countries
 
@@ -12,18 +13,18 @@ Paketname:
 Features
 --------
 
-- Mehr als 200 Länder
-- Zu jedem Land die ISO Codes
-- PHP Country Verwaltungs-Klasse
+- More than 200 countries
+- To each country the ISO codes
+- PHP Country Classes
 
 
 Installation
 ------------
 
-Der Paketname ist: quiqqer/countries
+The Package name is: quiqqer/countries
 
 
-Mitwirken
+Contribute
 ----------
 
 - Issue Tracker: https://dev.quiqqer.com/quiqqer/package-countries/issues
@@ -33,9 +34,8 @@ Mitwirken
 Support
 -------
 
-Falls Sie ein Fehler gefunden haben oder Verbesserungen wünschen,
-Dann können Sie gerne an support@pcsg.de eine E-Mail schreiben.
-
+If you have found a bug or want to make improvements,
+Then you can write an e-mail to support@pcsg.de.
 
 License
 -------
@@ -43,15 +43,15 @@ License
 MIT
 
 
-Entwickler
+Usage
 --------
 
-Das quiqqer/countries Paket bringt ein Country Select Box Control mit.
-Dieses Control baut ein \<select> Element mit allen Ländern auf.
+The quiqqer/countries package includes a Country Select Box Control.
+This control builds a \<select> element with all countries.
 
     {control control="\QUI\Countries\Controls\Select" selected="DE"}
 
 
 *Attribute*
 
-- selected="DE" -> [optional] Der vorausgewählte Eintrag
+- selected="DE" -> [optional] The selected entry

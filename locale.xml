@@ -6,13 +6,12 @@
             <en><![CDATA[QUIQQER - Countries]]></en>
         </locale>
         <locale name="package.description">
-            <de><![CDATA[Erweitert QUIQQER um eine Länderliste und Länderobjekte]]></de>
-            <en><![CDATA[Expanded QUIQQER with a country list and country objects]]></en>
+            <de><![CDATA[Erweitert QUIQQER um eine Länderdatenbank.]]></de>
+            <en><![CDATA[Extend QUIQQER with a country database.]]></en>
         </locale>
 
         <locale name="country.001">
             <de><![CDATA[Welt]]></de>
-
             <en><![CDATA[World]]></en>
         </locale>
         <locale name="country.002">
