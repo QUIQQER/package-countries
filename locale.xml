@@ -9,6 +9,10 @@
             <de><![CDATA[Erweitert QUIQQER um eine Länderdatenbank.]]></de>
             <en><![CDATA[Extend QUIQQER with a country database.]]></en>
         </locale>
+        <locale name="exception.country.not.found">
+            <de><![CDATA[Das Land wurde nicht gefunden.]]></de>
+            <en><![CDATA[The country was not found.]]></en>
+        </locale>
 
         <locale name="country.001">
             <de><![CDATA[Welt]]></de>
