@@ -26,8 +26,10 @@ class Select extends QUI\Control
     {
         // default
         $this->setAttributes(array(
-            'name' => 'countries',
-            'selected' => ''
+            'name'     => 'countries',
+            'selected' => '',
+            'class'    => false,    // css class to add to the select html element
+            'required' => false
         ));
 
         parent::__construct($attributes);
@@ -43,7 +45,21 @@ class Select extends QUI\Control
     public function create()
     {
         $countries = Manager::getList();
-        $result    = '<select name="">';
+        $result    = '<select';
+
+        if ($this->getAttribute('name')) {
+            $result .= ' name="' . $this->getAttribute('name') . '"';
+        }
+
+        if ($this->getAttribute('class')) {
+            $result .= ' class="' . $this->getAttribute('class') . '"';
+        }
+
+        if ($this->getAttribute('required')) {
+            $result .= ' required';
+        }
+
+        $result .= '>';
 
         $selected = $this->getAttribute('selected');
 
