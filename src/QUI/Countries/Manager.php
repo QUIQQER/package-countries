@@ -109,7 +109,12 @@ class Manager extends QUI\QDOM
                 continue;
             }
 
-            $Country = new Country($entry);
+            try {
+                $Country = new Country($entry);
+            } catch (QUI\Exception $Exception) {
+                QUI\System\Log::writeException($Exception);
+                continue;
+            }
 
             self::$countries[$code] = $Country;
 

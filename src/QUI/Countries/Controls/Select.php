@@ -45,18 +45,24 @@ class Select extends QUI\Control
     public function create()
     {
         $countries = Manager::getList();
-        $result    = '<select';
+        $result    = '<select data-qui="package/quiqqer/countries/bin/controls/Select" ';
 
         if ($this->getAttribute('name')) {
-            $result .= ' name="' . $this->getAttribute('name') . '"';
+            $result .= ' name="'.$this->getAttribute('name').'"';
         }
 
         if ($this->getAttribute('class')) {
-            $result .= ' class="' . $this->getAttribute('class') . '"';
+            $result .= ' class="'.$this->getAttribute('class').'"';
         }
 
         if ($this->getAttribute('required')) {
             $result .= ' required';
+        }
+
+        if (!$this->getAttribute('no-autocomplete')) {
+            $result .= ' autocomplete="country-name"';
+        } else {
+            $result .= ' autocomplete="off"';
         }
 
         $result .= '>';
@@ -65,9 +71,9 @@ class Select extends QUI\Control
 
         /* @var $Country \QUI\Countries\Country */
         foreach ($countries as $Country) {
-            $result .= '<option value="' . $Country->getCode() . '"';
+            $result .= '<option value="'.$Country->getCode().'"';
 
-            if ($Country->getCode() == $selected) {
+            if ($Country->getCodeToLower() == mb_strtolower($selected)) {
                 $result .= ' selected="selected"';
             }
 
