@@ -57,6 +57,8 @@ define('package/quiqqer/countries/bin/controls/Select', [
          */
         $onCreate: function () {
             this.$Elm.addClass('quiqqer-countries-select');
+            this.$Elm.set('data-qui', 'package/quiqqer/countries/bin/controls/Select');
+
             this.Loader.inject(this.$Content);
         },
 
@@ -96,6 +98,7 @@ define('package/quiqqer/countries/bin/controls/Select', [
                 }
 
                 this.$Input.setStyle('display', 'none');
+                this.setValue(this.$Input.value);
             }
         },
 
