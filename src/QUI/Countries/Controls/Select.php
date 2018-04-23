@@ -22,15 +22,16 @@ class Select extends QUI\Control
      *
      * @param array $attributes
      */
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
         // default
-        $this->setAttributes(array(
-            'name'     => 'countries',
-            'selected' => '',
-            'class'    => false,    // css class to add to the select html element
-            'required' => false
-        ));
+        $this->setAttributes([
+            'name'             => 'countries',
+            'selected'         => '',
+            'class'            => false,    // css class to add to the select html element
+            'required'         => false,
+            'use-geo-location' => true
+        ]);
 
         parent::__construct($attributes);
     }
@@ -68,6 +69,14 @@ class Select extends QUI\Control
         $result .= '>';
 
         $selected = $this->getAttribute('selected');
+
+        if (empty($selected) && $this->getAttribute('use-geo-location')) {
+            $Country = QUI::getUserBySession()->getCountry();
+
+            if ($Country) {
+                $selected = $Country->getCode();
+            }
+        }
 
         /* @var $Country \QUI\Countries\Country */
         foreach ($countries as $Country) {
