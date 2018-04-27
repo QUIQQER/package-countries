@@ -71,7 +71,14 @@ class Select extends QUI\Control
         $selected = $this->getAttribute('selected');
 
         if (empty($selected) && $this->getAttribute('use-geo-location')) {
-            $Country = QUI::getUserBySession()->getCountry();
+            $Country = null;
+
+            if (isset($_SERVER["GEOIP_COUNTRY_CODE"])) { // only for apache
+                try {
+                    $Country = QUI\Countries\Manager::get($_SERVER["GEOIP_COUNTRY_CODE"]);
+                } catch (QUI\Exception $Exception) {
+                }
+            }
 
             if ($Country) {
                 $selected = $Country->getCode();
