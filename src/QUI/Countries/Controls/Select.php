@@ -45,7 +45,7 @@ class Select extends QUI\Control
      */
     public function create()
     {
-        $countries = Manager::getList();
+        $countries = Manager::getSortedList();
         $result    = '<select data-qui="package/quiqqer/countries/bin/controls/Select" ';
 
         if ($this->getAttribute('name')) {
