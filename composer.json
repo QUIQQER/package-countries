@@ -2,7 +2,7 @@
   "name": "quiqqer/countries",
   "type": "quiqqer-plugin",
   "description": "Extend QUIQQER with a country database",
-  "version": "dev-master",
+  "version": "1.2.0",
   "license": "MIT",
   "authors": [
     {
@@ -16,7 +16,7 @@
     "email": "support@pcsg.de"
   },
   "require": {
-    "quiqqer/quiqqer": "*",
+    "quiqqer/quiqqer": ">=1.1|dev-master",
     "quiqqer/utils": "*@dev"
   },
   "autoload": {
