@@ -22,15 +22,16 @@ class Select extends QUI\Control
      *
      * @param array $attributes
      */
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
         // default
-        $this->setAttributes(array(
-            'name'     => 'countries',
-            'selected' => '',
-            'class'    => false,    // css class to add to the select html element
-            'required' => false
-        ));
+        $this->setAttributes([
+            'name'             => 'countries',
+            'selected'         => '',
+            'class'            => false,    // css class to add to the select html element
+            'required'         => false,
+            'use-geo-location' => true
+        ]);
 
         parent::__construct($attributes);
     }
@@ -44,30 +45,51 @@ class Select extends QUI\Control
      */
     public function create()
     {
-        $countries = Manager::getList();
-        $result    = '<select';
+        $countries = Manager::getSortedList();
+        $result    = '<select data-qui="package/quiqqer/countries/bin/controls/Select" ';
 
         if ($this->getAttribute('name')) {
-            $result .= ' name="' . $this->getAttribute('name') . '"';
+            $result .= ' name="'.$this->getAttribute('name').'"';
         }
 
         if ($this->getAttribute('class')) {
-            $result .= ' class="' . $this->getAttribute('class') . '"';
+            $result .= ' class="'.$this->getAttribute('class').'"';
         }
 
         if ($this->getAttribute('required')) {
             $result .= ' required';
         }
 
+        if (!$this->getAttribute('no-autocomplete')) {
+            $result .= ' autocomplete="country-name"';
+        } else {
+            $result .= ' autocomplete="off"';
+        }
+
         $result .= '>';
 
         $selected = $this->getAttribute('selected');
 
+        if (empty($selected) && $this->getAttribute('use-geo-location')) {
+            $Country = null;
+
+            if (isset($_SERVER["GEOIP_COUNTRY_CODE"])) { // only for apache
+                try {
+                    $Country = QUI\Countries\Manager::get($_SERVER["GEOIP_COUNTRY_CODE"]);
+                } catch (QUI\Exception $Exception) {
+                }
+            }
+
+            if ($Country) {
+                $selected = $Country->getCode();
+            }
+        }
+
         /* @var $Country \QUI\Countries\Country */
         foreach ($countries as $Country) {
-            $result .= '<option value="' . $Country->getCode() . '"';
+            $result .= '<option value="'.$Country->getCode().'"';
 
-            if ($Country->getCode() == $selected) {
+            if ($Country->getCodeToLower() == mb_strtolower($selected)) {
                 $result .= ' selected="selected"';
             }
 

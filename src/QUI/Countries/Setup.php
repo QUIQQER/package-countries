@@ -22,9 +22,19 @@ class Setup extends QUI\QDOM
      */
     public static function setup()
     {
+        $Config  = QUI::getPackage('quiqqer/countries')->getConfig();
+        $dataMd5 = $Config->getValue('general', 'dataMd5');
+
         // Countries
-        $path  = str_replace('src/QUI/Countries/Setup.php', '', __FILE__);
-        $data  = json_decode(file_get_contents($path . '/db/intl.json'), true);
+        $path    = str_replace('src/QUI/Countries/Setup.php', '', __FILE__);
+        $file    = $path.'/db/intl.json';
+        $fileMd5 = md5_file($file);
+
+        if ($fileMd5 == $dataMd5) {
+            return;
+        }
+
+        $data  = json_decode(file_get_contents($path.'/db/intl.json'), true);
         $table = Manager::getDataBaseTableName();
 
         $Table = QUI::getDataBase()->table();
@@ -81,5 +91,8 @@ class Setup extends QUI\QDOM
                 QUI\System\Log::addWarning($Exception->getMessage());
             }
         }
+
+        $Config->setValue('general', 'dataMd5', $fileMd5);
+        $Config->save();
     }
 }
