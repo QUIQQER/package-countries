@@ -21,7 +21,7 @@ class Manager extends QUI\QDOM
      *
      * @var array
      */
-    private static $countries = array();
+    private static $countries = [];
 
     /**
      * Return the real table name
@@ -45,7 +45,7 @@ class Manager extends QUI\QDOM
             return false;
         }
 
-        return get_class($Mixed) == Country::class;
+        return \get_class($Mixed) == Country::class;
     }
 
     /**
@@ -67,13 +67,13 @@ class Manager extends QUI\QDOM
             return self::$countries[$code];
         }
 
-        $result = QUI::getDataBase()->fetch(array(
+        $result = QUI::getDataBase()->fetch([
             'from'  => self::getDataBaseTableName(),
-            'where' => array(
+            'where' => [
                 $type => QUI\Utils\StringHelper::toUpper($code)
-            ),
+            ],
             'limit' => '1'
-        ));
+        ]);
 
         if (!isset($result[0])) {
             throw new QUI\Exception(
@@ -94,12 +94,18 @@ class Manager extends QUI\QDOM
      */
     public static function getList()
     {
-        $result = QUI::getDataBase()->fetch(array(
-            'from'  => self::getDataBaseTableName(),
-            'order' => 'countries_iso_code_2 ASC'
-        ));
+        try {
+            $result = QUI::getDataBase()->fetch([
+                'from'  => self::getDataBaseTableName(),
+                'order' => 'countries_iso_code_2 ASC'
+            ]);
+        } catch (QUI\Exception $Exception) {
+            QUI\System\Log::writeDebugException($Exception);
 
-        $countries = array();
+            return [];
+        }
+
+        $countries = [];
 
         foreach ($result as $entry) {
             $code = $entry['countries_iso_code_2'];
@@ -138,11 +144,11 @@ class Manager extends QUI\QDOM
             $sort = function ($CountryA, $CountryB) {
                 /* @var $CountryA Country */
                 /* @var $CountryB Country */
-                return strnatcmp($CountryA->getName(), $CountryB->getName());
+                return \strnatcmp($CountryA->getName(), $CountryB->getName());
             };
         }
 
-        usort($countries, $sort);
+        \usort($countries, $sort);
 
         return $countries;
     }
@@ -154,7 +160,7 @@ class Manager extends QUI\QDOM
      */
     public static function getAllCountryCodes()
     {
-        $result    = array();
+        $result    = [];
         $countries = self::getList();
 
         foreach ($countries as $Country) {

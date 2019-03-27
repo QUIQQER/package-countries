@@ -89,7 +89,7 @@ class Select extends QUI\Control
         foreach ($countries as $Country) {
             $result .= '<option value="'.$Country->getCode().'"';
 
-            if ($Country->getCodeToLower() == mb_strtolower($selected)) {
+            if ($Country->getCodeToLower() == \mb_strtolower($selected)) {
                 $result .= ' selected="selected"';
             }
 
