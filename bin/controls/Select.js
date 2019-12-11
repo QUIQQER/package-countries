@@ -3,11 +3,6 @@
  *
  * @module package/quiqqer/countries/bin/controls/Select
  * @author www.pcsg.de (Patrick Müller)
- *
- * @require qui/controls/buttons/Select
- * @require qui/controls/loader/Loader
- * @require Ajax
- * @require Locale
  */
 define('package/quiqqer/countries/bin/controls/Select', [
 
