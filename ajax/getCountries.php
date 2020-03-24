@@ -30,7 +30,7 @@ QUI::$Ajax->registerFunction(
         $Locale->setCurrent($lang);
 
         $list      = Manager::getSortedList();
-        $countries = array();
+        $countries = [];
 
         /** @var \QUI\Countries\Country $Country */
         foreach ($list as $Country) {
@@ -41,6 +41,6 @@ QUI::$Ajax->registerFunction(
 
         return $countries;
     },
-    array('lang'),
+    ['lang'],
     false
 );

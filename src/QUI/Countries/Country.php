@@ -19,7 +19,7 @@ class Country extends QUI\QDOM
     /**
      * @var array
      */
-    protected $languages = array();
+    protected $languages = [];
 
     /**
      * construcor
@@ -59,8 +59,8 @@ class Country extends QUI\QDOM
             throw new QUI\Exception('Parameter currency fehlt');
         }
 
-        if (is_string($params['languages'])) {
-            $this->languages = json_decode($params['languages'], true);
+        if (\is_string($params['languages'])) {
+            $this->languages = \json_decode($params['languages'], true);
         }
 
         parent::setAttributes($params);
@@ -94,7 +94,7 @@ class Country extends QUI\QDOM
      */
     public function getCodeToLower($type = 'countries_iso_code_2')
     {
-        return strtolower($this->getCode($type));
+        return \strtolower($this->getCode($type));
     }
 
     /**
@@ -136,7 +136,7 @@ class Country extends QUI\QDOM
      */
     public function getName($Locale = null)
     {
-        if (is_null($Locale)) {
+        if (\is_null($Locale)) {
             $Locale = QUI::getLocale();
         }
 
@@ -166,7 +166,7 @@ class Country extends QUI\QDOM
      */
     public function getLanguages()
     {
-        return array_map(function ($data) {
+        return \array_map(function ($data) {
             return $data['language'];
         }, $this->languages);
     }
@@ -179,6 +179,6 @@ class Country extends QUI\QDOM
      */
     public function getLocaleCode()
     {
-        return strtolower($this->getLang()).'_'.strtoupper($this->getCode());
+        return \strtolower($this->getLang()).'_'.\strtoupper($this->getCode());
     }
 }

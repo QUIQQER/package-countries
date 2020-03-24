@@ -26,21 +26,21 @@ class Setup extends QUI\QDOM
         $dataMd5 = $Config->getValue('general', 'dataMd5');
 
         // Countries
-        $path    = str_replace('src/QUI/Countries/Setup.php', '', __FILE__);
+        $path    = \str_replace('src/QUI/Countries/Setup.php', '', __FILE__);
         $file    = $path.'/db/intl.json';
-        $fileMd5 = md5_file($file);
+        $fileMd5 = \md5_file($file);
 
         if ($fileMd5 == $dataMd5) {
             return;
         }
 
-        $data  = json_decode(file_get_contents($path.'/db/intl.json'), true);
+        $data  = \json_decode(\file_get_contents($path.'/db/intl.json'), true);
         $table = Manager::getDataBaseTableName();
 
         $Table = QUI::getDataBase()->table();
         $Table->delete($table);
 
-        $Table->addColumn($table, array(
+        $Table->addColumn($table, [
             'countries_id'         => 'int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'countries_iso_code_2' => 'char(2) NOT NULL',
             'countries_iso_code_3' => 'char(3) NOT NULL',
@@ -48,7 +48,7 @@ class Setup extends QUI\QDOM
             'language'             => 'char(3) NOT NULL',
             'languages'            => 'text NOT NULL',
             'currency'             => 'char(3) NOT NULL'
-        ));
+        ]);
 
         foreach ($data as $country => $entry) {
             $language = '';
@@ -69,24 +69,24 @@ class Setup extends QUI\QDOM
                 $entry['currency_code'] = '';
             }
 
-            if (strlen($language) > 3 && strpos($language, '_') === false) {
+            if (\strlen($language) > 3 && \strpos($language, '_') === false) {
                 continue;
             }
 
-            if (strlen($language) > 3) {
-                $language = explode('_', $language);
+            if (\strlen($language) > 3) {
+                $language = \explode('_', $language);
                 $language = $language[0];
             }
 
             try {
-                QUI::getDataBase()->insert($table, array(
+                QUI::getDataBase()->insert($table, [
                     'countries_iso_code_2' => $country,
                     'countries_iso_code_3' => $entry['three_letter_code'],
                     'numeric_code'         => $entry['numeric_code'],
                     'language'             => $language,
-                    'languages'            => json_encode($entry['languages']),
+                    'languages'            => \json_encode($entry['languages']),
                     'currency'             => $entry['currency_code']
-                ));
+                ]);
             } catch (QUI\Database\Exception $Exception) {
                 QUI\System\Log::addWarning($Exception->getMessage());
             }

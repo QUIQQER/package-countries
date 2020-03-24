@@ -4,10 +4,7 @@
  * @module package/quiqqer/countries/bin/controls/Select
  * @author www.pcsg.de (Patrick Müller)
  *
- * @require qui/controls/buttons/Select
- * @require qui/controls/loader/Loader
- * @require Ajax
- * @require Locale
+ * @event onCountryChange [self, value]
  */
 define('package/quiqqer/countries/bin/controls/Select', [
 
@@ -29,7 +26,8 @@ define('package/quiqqer/countries/bin/controls/Select', [
             '$onInject',
             '$onCreate',
             '$onImport',
-            '$load'
+            '$load',
+            '$onChange'
         ],
 
         options: {
@@ -58,6 +56,7 @@ define('package/quiqqer/countries/bin/controls/Select', [
         $onCreate: function () {
             this.$Elm.addClass('quiqqer-countries-select');
             this.$Elm.set('data-qui', 'package/quiqqer/countries/bin/controls/Select');
+            this.$Elm.set('data-quiid', this.getId());
 
             this.Loader.inject(this.$Content);
         },
@@ -116,6 +115,7 @@ define('package/quiqqer/countries/bin/controls/Select', [
          */
         $onChange: function (value) {
             this.$Input.value = value;
+            this.fireEvent('countryChange', [this, value]);
         },
 
         /**
@@ -145,6 +145,7 @@ define('package/quiqqer/countries/bin/controls/Select', [
                 }
 
                 self.Loader.hide();
+                self.$Elm.set('data-quiid', this.getId());
             });
         },
 
