@@ -30,6 +30,11 @@ class Setup extends QUI\QDOM
         $file    = $path.'/db/intl.json';
         $fileMd5 = \md5_file($file);
 
+        $Table = QUI::getDataBase()->table();
+        $Table->addColumn(Manager::getDataBaseTableName(), [
+            'active' => 'int(1) NOT NULL DEFAULT 1'
+        ]);
+
         if ($fileMd5 == $dataMd5) {
             return;
         }
@@ -47,7 +52,8 @@ class Setup extends QUI\QDOM
             'numeric_code'         => 'char(4) NOT NULL',
             'language'             => 'char(3) NOT NULL',
             'languages'            => 'text NOT NULL',
-            'currency'             => 'char(3) NOT NULL'
+            'currency'             => 'char(3) NOT NULL',
+            'active'               => 'int(1) NOT NULL DEFAULT 1'
         ]);
 
         foreach ($data as $country => $entry) {
