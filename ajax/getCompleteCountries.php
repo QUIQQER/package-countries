@@ -22,7 +22,7 @@ QUI::$Ajax->registerFunction(
         $cacheName = 'quiqqer/countries/complete-list/'.$lang;
 
         try {
-           return CacheManager::get($cacheName);
+            return CacheManager::get($cacheName);
         } catch (\Exception $Exception) {
         }
 
