@@ -6,11 +6,12 @@ define('package/quiqqer/countries/bin/controls/backend/Settings', [
 
     'qui/QUI',
     'qui/controls/Control',
+    'qui/controls/windows/Confirm',
     'controls/grid/Grid',
     'Locale',
     'Ajax'
 
-], function (QUI, QUIControl, Grid, QUILocale, QUIAjax) {
+], function (QUI, QUIControl, QUIConfirm, Grid, QUILocale, QUIAjax) {
     "use strict";
 
     return new Class({
@@ -52,7 +53,7 @@ define('package/quiqqer/countries/bin/controls/backend/Settings', [
 
             this.$Grid = new Grid(Container, {
                 columnModel: [{
-                    header   : '',
+                    header   : '<input type="checkbox" name="check-all"/>',
                     dataIndex: 'checkbox',
                     dataType : 'node',
                     width    : 60
@@ -71,14 +72,51 @@ define('package/quiqqer/countries/bin/controls/backend/Settings', [
                 height: 400
             });
 
+            var All = this.$Grid.getElm().getElement('[name="check-all"]');
 
-            Promise.all([
+            All.addEvent('click', function (e) {
+                e.stop();
+
+                (function () {
+                    e.target.checked = !e.target.checked;
+                    All.fireEvent('change');
+                }).delay(100);
+            });
+
+            All.addEvent('change', function () {
+                if (this.checked) {
+                    self.checkAll();
+                } else {
+                    self.uncheckAll();
+                }
+            });
+
+            All.setStyles({
+                position: 'relative',
+                top     : 2
+            });
+
+            this.refresh().then(function () {
+                self.$Grid.setWidth(Cell.getSize().x - 20);
+            });
+        },
+
+        /**
+         * @return {Promise}
+         */
+        refresh: function () {
+            var self = this;
+            var All  = this.$Grid.getElm().getElement('[name="check-all"]');
+
+            return Promise.all([
                 this.getCompleteCountries(),
                 this.getCountries()
             ]).then(function (result) {
                 var complete = result[0];
                 var active   = result[1];
                 var data     = [];
+
+                All.checked = !!Object.getLength(active);
 
                 for (var code in complete) {
                     if (!complete.hasOwnProperty(code)) {
@@ -99,8 +137,6 @@ define('package/quiqqer/countries/bin/controls/backend/Settings', [
                 self.$Grid.setData({
                     data: data
                 });
-
-                self.$Grid.setWidth(Cell.getSize().x - 20);
 
                 self.$Grid.getElm().getElements('li').addEvent('click', function (event) {
                     var Target = event.target;
@@ -184,6 +220,68 @@ define('package/quiqqer/countries/bin/controls/backend/Settings', [
                     onError  : reject
                 });
             });
+        },
+
+        uncheckAll: function () {
+            var self = this;
+
+            new QUIConfirm({
+                icon       : 'fa fa-square-o',
+                texticon   : 'fa fa-square-o',
+                title      : 'Alle Länder abwählen?',
+                text       : 'Möchtest du alle Länder abwählen?',
+                information: 'Die Änderung wird sofort übernommen und kann nicht rückgängig gemacht werden.',
+                maxHeight  : 300,
+                maxWidth   : 600,
+                events     : {
+                    onSubmit: function (Win) {
+                        Win.Loader.show();
+
+                        QUIAjax.post('package_quiqqer_countries_ajax_unSelectAllCountries', function () {
+                            self.refresh().then(function () {
+                                Win.close();
+                            });
+                        }, {
+                            'package': 'quiqqer/countries'
+                        });
+                    },
+
+                    onCancel: function () {
+                        self.$Grid.getElm().getElement('[name="check-all"]').checked = true;
+                    }
+                }
+            }).open();
+        },
+
+        checkAll: function () {
+            var self = this;
+
+            new QUIConfirm({
+                icon       : 'fa fa-check-square-o',
+                texticon   : 'fa fa-check-square-o',
+                title      : 'Alle Länder auswählen?',
+                text       : 'Möchtest du alle Länder auswählen?',
+                information: 'Die Änderung wird sofort übernommen und kann nicht rückgängig gemacht werden.',
+                maxHeight  : 300,
+                maxWidth   : 600,
+                events     : {
+                    onSubmit: function (Win) {
+                        Win.Loader.show();
+
+                        QUIAjax.post('package_quiqqer_countries_ajax_selectAllCountries', function () {
+                            self.refresh().then(function () {
+                                Win.close();
+                            });
+                        }, {
+                            'package': 'quiqqer/countries'
+                        });
+                    },
+
+                    onCancel: function () {
+                        self.$Grid.getElm().getElement('[name="check-all"]').checked = false;
+                    }
+                }
+            }).open();
         }
     });
 });
