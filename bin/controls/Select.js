@@ -145,7 +145,7 @@ define('package/quiqqer/countries/bin/controls/Select', [
                 }
 
                 self.Loader.hide();
-                self.$Elm.set('data-quiid', this.getId());
+                self.$Elm.set('data-quiid', self.getId());
             });
         },
 

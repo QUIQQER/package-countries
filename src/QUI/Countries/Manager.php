@@ -72,7 +72,7 @@ class Manager extends QUI\QDOM
             'where' => [
                 $type => QUI\Utils\StringHelper::toUpper($code)
             ],
-            'limit' => '1'
+            'limit' => 1
         ]);
 
         if (!isset($result[0])) {
@@ -88,11 +88,11 @@ class Manager extends QUI\QDOM
     }
 
     /**
-     * Get the complete country list
+     * Returns the complete country list
      *
      * @return array
      */
-    public static function getList()
+    public static function getCompleteList()
     {
         try {
             $result = QUI::getDataBase()->fetch([
@@ -105,6 +105,40 @@ class Manager extends QUI\QDOM
             return [];
         }
 
+        return self::parseCountryDbData($result);
+    }
+
+    /**
+     * Return ths country list
+     * Only active counries
+     *
+     * @return array
+     */
+    public static function getList()
+    {
+        try {
+            $result = QUI::getDataBase()->fetch([
+                'from'  => self::getDataBaseTableName(),
+                'where' => [
+                    'active' => 1
+                ],
+                'order' => 'countries_iso_code_2 ASC'
+            ]);
+        } catch (QUI\Exception $Exception) {
+            QUI\System\Log::writeDebugException($Exception);
+
+            return [];
+        }
+
+        return self::parseCountryDbData($result);
+    }
+
+    /**
+     * @param $result
+     * @return array
+     */
+    protected static function parseCountryDbData($result)
+    {
         $countries = [];
 
         foreach ($result as $entry) {
@@ -133,12 +167,31 @@ class Manager extends QUI\QDOM
     /**
      * Return the countries in sorted order
      *
-     * @param callable|null $sort - optional, sorting function
+     * @param callable|null|array $params - optional, sorting function
      * @return array
      */
-    public static function getSortedList($sort = null)
+    public static function getSortedList($params = null)
     {
-        $countries = self::getList();
+        $complete = false;
+        $sort     = null;
+
+        if (!\is_array($params)) {
+            $sort = $params;
+        } else {
+            if (isset($params['sort'])) {
+                $sort = $params['sort'];
+            }
+
+            if (isset($params['complete'])) {
+                $complete = $params['complete'];
+            }
+        }
+
+        if ($complete) {
+            $countries = self::getCompleteList();
+        } else {
+            $countries = self::getList();
+        }
 
         if ($sort === null) {
             $sort = function ($CountryA, $CountryB) {
