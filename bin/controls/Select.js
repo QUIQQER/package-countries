@@ -12,7 +12,9 @@ define('package/quiqqer/countries/bin/controls/Select', [
     'qui/controls/loader/Loader',
 
     'Ajax',
-    'Locale'
+    'Locale',
+
+    'css!package/quiqqer/countries/bin/controls/Select.css'
 
 ], function (QUISelect, QUILoader, QUIAjax, QUILocale) {
     "use strict";
@@ -67,6 +69,10 @@ define('package/quiqqer/countries/bin/controls/Select', [
         $onImport: function () {
             this.$Input = this.getElm();
             var Elm     = this.create();
+
+            Elm.addClass('quiqqer-countries-select');
+            Elm.set('data-qui', 'package/quiqqer/countries/bin/controls/Select');
+            Elm.set('data-quiid', this.getId());
 
             if (this.$Input.nodeName === 'INPUT') {
                 this.$Input.type = 'hidden';
