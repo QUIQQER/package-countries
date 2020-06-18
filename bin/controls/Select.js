@@ -52,11 +52,11 @@ define('package/quiqqer/countries/bin/controls/Select', [
             this.$currentCode = QUILocale.getCurrent();
 
             if (typeof QUIQQER.country !== 'undefined') {
-                this.$currentCode = QUIQQER.COUNTRY_CODE;
+                this.$currentCode = QUIQQER.country;
             }
 
             if (typeof QUIQQER_USER.country !== 'undefined') {
-                this.$currentCode = QUIQQER_USER.COUNTRY_CODE;
+                this.$currentCode = QUIQQER_USER.country;
             }
         },
 
