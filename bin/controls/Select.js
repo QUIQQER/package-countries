@@ -50,6 +50,14 @@ define('package/quiqqer/countries/bin/controls/Select', [
 
             this.Loader       = new QUILoader();
             this.$currentCode = QUILocale.getCurrent();
+
+            if (typeof QUIQQER.country !== 'undefined') {
+                this.$currentCode = QUIQQER.COUNTRY_CODE;
+            }
+
+            if (typeof QUIQQER_USER.country !== 'undefined') {
+                this.$currentCode = QUIQQER_USER.COUNTRY_CODE;
+            }
         },
 
         /**
