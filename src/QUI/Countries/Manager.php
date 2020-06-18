@@ -24,6 +24,11 @@ class Manager extends QUI\QDOM
     private static $countries = [];
 
     /**
+     * @var Country
+     */
+    private static $DefaultCountry = null;
+
+    /**
      * Return the real table name
      *
      * @return string
@@ -46,6 +51,27 @@ class Manager extends QUI\QDOM
         }
 
         return \get_class($Mixed) == Country::class;
+    }
+
+    /**
+     * Return the default country
+     *
+     * @return Country|null
+     * @throws QUI\Exception
+     */
+    public static function getDefaultCountry()
+    {
+        if (self::$DefaultCountry === null) {
+            try {
+                self::$DefaultCountry = QUI\Countries\Manager::get(
+                    QUI::conf('globals', 'country')
+                );
+            } catch (QUI\Exception $Exception) {
+                self::$DefaultCountry = QUI\Countries\Manager::get('de');
+            }
+        }
+
+        return self::$DefaultCountry;
     }
 
     /**
