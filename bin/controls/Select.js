@@ -55,7 +55,7 @@ define('package/quiqqer/countries/bin/controls/Select', [
                 this.$currentCode = QUIQQER.country;
             }
 
-            if (typeof QUIQQER_USER.country !== 'undefined') {
+            if (typeof QUIQQER_USER !== 'undefined' && typeof QUIQQER_USER.country !== 'undefined') {
                 this.$currentCode = QUIQQER_USER.country;
             }
         },
