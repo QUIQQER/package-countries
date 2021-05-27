@@ -33,7 +33,7 @@ class Manager extends QUI\QDOM
      *
      * @return string
      */
-    public static function getDataBaseTableName()
+    public static function getDataBaseTableName(): string
     {
         return QUI::getDBTableName('countries');
     }
@@ -44,7 +44,7 @@ class Manager extends QUI\QDOM
      * @param mixed $Mixed
      * @return boolean
      */
-    public static function isCountry($Mixed)
+    public static function isCountry($Mixed): bool
     {
         if (!$Mixed) {
             return false;
@@ -59,7 +59,7 @@ class Manager extends QUI\QDOM
      * @return Country|null
      * @throws QUI\Exception
      */
-    public static function getDefaultCountry()
+    public static function getDefaultCountry(): ?Country
     {
         if (self::$DefaultCountry === null) {
             try {
@@ -82,12 +82,11 @@ class Manager extends QUI\QDOM
      *
      * @return QUI\Countries\Country
      * @throws QUI\Exception
-     *
      * @example
      * $Country = \QUI\Countries\Manager::get('de');
      * $Country->getName()
      */
-    public static function get($code, $type = 'countries_iso_code_2')
+    public static function get(string $code, $type = 'countries_iso_code_2'): Country
     {
         if (isset(self::$countries[$code])) {
             return self::$countries[$code];
@@ -118,7 +117,7 @@ class Manager extends QUI\QDOM
      *
      * @return array
      */
-    public static function getCompleteList()
+    public static function getCompleteList(): array
     {
         try {
             $result = QUI::getDataBase()->fetch([
@@ -140,7 +139,7 @@ class Manager extends QUI\QDOM
      *
      * @return array
      */
-    public static function getList()
+    public static function getList(): array
     {
         try {
             $result = QUI::getDataBase()->fetch([
@@ -163,7 +162,7 @@ class Manager extends QUI\QDOM
      * @param $result
      * @return array
      */
-    protected static function parseCountryDbData($result)
+    protected static function parseCountryDbData($result): array
     {
         $countries = [];
 
@@ -196,7 +195,7 @@ class Manager extends QUI\QDOM
      * @param callable|null|array $params - optional, sorting function
      * @return array
      */
-    public static function getSortedList($params = null)
+    public static function getSortedList($params = null): array
     {
         $complete = false;
         $sort     = null;
@@ -237,7 +236,7 @@ class Manager extends QUI\QDOM
      *
      * @return array
      */
-    public static function getAllCountryCodes()
+    public static function getAllCountryCodes(): array
     {
         $result    = [];
         $countries = self::getList();
@@ -257,7 +256,7 @@ class Manager extends QUI\QDOM
      *
      * @return bool
      */
-    public static function existsCountryCode($code)
+    public static function existsCountryCode(string $code): bool
     {
         try {
             self::get($code);
