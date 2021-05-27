@@ -39,9 +39,9 @@ class Select extends QUI\Control
     /**
      * (non-PHPdoc)
      *
+     * @return String
      * @see \QUI\Control::create()
      *
-     * @return String
      */
     public function create()
     {
@@ -76,6 +76,13 @@ class Select extends QUI\Control
             if (isset($_SERVER["GEOIP_COUNTRY_CODE"])) { // only for apache
                 try {
                     $Country = QUI\Countries\Manager::get($_SERVER["GEOIP_COUNTRY_CODE"]);
+                } catch (QUI\Exception $Exception) {
+                }
+            }
+
+            if (!$Country) {
+                try {
+                    $Country = Manager::getDefaultCountry();
                 } catch (QUI\Exception $Exception) {
                 }
             }
