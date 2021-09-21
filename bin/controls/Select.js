@@ -51,16 +51,16 @@ define('package/quiqqer/countries/bin/controls/Select', [
             this.Loader       = new QUILoader();
             this.$currentCode = QUILocale.getCurrent();
 
-            if (typeof QUIQQER.country !== 'undefined') {
-                this.$currentCode = QUIQQER.country;
+            if (typeof window.QUIQQER.country !== 'undefined') {
+                this.$currentCode = window.QUIQQER.country;
             }
 
-            if (typeof QUIQQER_USER !== 'undefined' &&
-                typeof QUIQQER_USER.country !== 'undefined' &&
-                QUIQQER_USER.country &&
-                QUIQQER_USER.country !== ''
+            if (typeof window.QUIQQER_USER !== 'undefined' &&
+                typeof window.QUIQQER_USER.country !== 'undefined' &&
+                window.QUIQQER_USER.country &&
+                window.QUIQQER_USER.country !== ''
             ) {
-                this.$currentCode = QUIQQER_USER.country;
+                this.$currentCode = window.QUIQQER_USER.country;
             }
         },
 
@@ -80,7 +80,7 @@ define('package/quiqqer/countries/bin/controls/Select', [
          */
         $onImport: function () {
             this.$Input = this.getElm();
-            var Elm     = this.create();
+            const Elm   = this.create();
 
             Elm.addClass('quiqqer-countries-select');
             Elm.set('data-qui', 'package/quiqqer/countries/bin/controls/Select');
@@ -100,12 +100,12 @@ define('package/quiqqer/countries/bin/controls/Select', [
             }
 
             if (this.$Input.nodeName === 'SELECT') {
-                var optionElms = this.$Input.getElements('option');
+                const optionElms = this.$Input.getElements('option');
 
                 Elm.inject(this.$Input, 'after');
 
-                for (var i = 0, len = optionElms.length; i < len; i++) {
-                    var OptionElm = optionElms[i];
+                for (let i = 0, len = optionElms.length; i < len; i++) {
+                    let OptionElm = optionElms[i];
 
                     this.appendChild(
                         OptionElm.innerText,
@@ -132,6 +132,10 @@ define('package/quiqqer/countries/bin/controls/Select', [
          * @param {string} value - selected value
          */
         $onChange: function (value) {
+            if (!this.$Input) {
+                return;
+            }
+
             this.$Input.value = value;
             this.fireEvent('countryChange', [this, value]);
         },
@@ -140,12 +144,12 @@ define('package/quiqqer/countries/bin/controls/Select', [
          * Load data
          */
         $load: function () {
-            var self = this;
+            const self = this;
 
             this.Loader.show();
 
             this.$getCountryList().then(function (Countries) {
-                for (var countryCode in Countries) {
+                for (let countryCode in Countries) {
                     if (!Countries.hasOwnProperty(countryCode)) {
                         continue;
                     }
@@ -164,6 +168,7 @@ define('package/quiqqer/countries/bin/controls/Select', [
 
                 self.Loader.hide();
                 self.$Elm.set('data-quiid', self.getId());
+                self.fireEvent('load', [self]);
             });
         },
 
@@ -182,5 +187,4 @@ define('package/quiqqer/countries/bin/controls/Select', [
             });
         }
     });
-
 });
