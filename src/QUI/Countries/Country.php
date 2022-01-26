@@ -8,6 +8,13 @@ namespace QUI\Countries;
 
 use QUI;
 
+use function array_map;
+use function is_null;
+use function is_string;
+use function json_decode;
+use function strtolower;
+use function strtoupper;
+
 /**
  * A Country
  *
@@ -25,15 +32,15 @@ class Country extends QUI\QDOM
      * construcor
      * If you want a country, use the manager
      *
+     * @param array [$params]
+     *
+     * @throws QUI\Exception
      * @example
      * $Country = \QUI\Countries\Manager::get('de');
      * $Country->getName()
      *
-     * @param array $params
-     *
-     * @throws QUI\Exception
      */
-    public function __construct($params)
+    public function __construct($params = [])
     {
         if (!isset($params['countries_iso_code_2'])) {
             throw new QUI\Exception('Parameter countries_iso_code_2 fehlt');
@@ -59,8 +66,8 @@ class Country extends QUI\QDOM
             throw new QUI\Exception('Parameter currency fehlt');
         }
 
-        if (\is_string($params['languages'])) {
-            $this->languages = \json_decode($params['languages'], true);
+        if (is_string($params['languages'])) {
+            $this->languages = json_decode($params['languages'], true);
         }
 
         parent::setAttributes($params);
@@ -70,11 +77,11 @@ class Country extends QUI\QDOM
      * Return the country code
      * iso_code_2 or iso_code_2
      *
-     * @param string $type - countries_iso_code_2 or countries_iso_code_3
+     * @param string [$type] - countries_iso_code_2 or countries_iso_code_3
      *
      * @return string
      */
-    public function getCode($type = 'countries_iso_code_2')
+    public function getCode($type = 'countries_iso_code_2'): string
     {
         switch ($type) {
             default:
@@ -89,12 +96,12 @@ class Country extends QUI\QDOM
     /**
      * Return the country code in lowercase
      *
-     * @param string $type
+     * @param string [$type]
      * @return string
      */
-    public function getCodeToLower($type = 'countries_iso_code_2')
+    public function getCodeToLower($type = 'countries_iso_code_2'): string
     {
-        return \strtolower($this->getCode($type));
+        return strtolower($this->getCode($type));
     }
 
     /**
@@ -102,7 +109,7 @@ class Country extends QUI\QDOM
      *
      * @return string
      */
-    public function getCurrencyCode()
+    public function getCurrencyCode(): string
     {
         return $this->getAttribute('currency');
     }
@@ -112,7 +119,7 @@ class Country extends QUI\QDOM
      *
      * @return QUI\ERP\Currency\Currency
      */
-    public function getCurrency()
+    public function getCurrency(): QUI\ERP\Currency\Currency
     {
         // currency installed?
         QUI::getPackage('quiqqer/currency');
@@ -131,16 +138,16 @@ class Country extends QUI\QDOM
      * Return the name of the country
      * observed System_Locale
      *
-     * @param QUI\Locale $Locale (optional) - Locale object that is used for the name translation [default: \QUI::getLocale()]
+     * @param QUI\Locale [$Locale] (optional) - Locale object that is used for the name translation [default: \QUI::getLocale()]
      * @return string
      */
-    public function getName($Locale = null)
+    public function getName($Locale = null): string
     {
-        if (\is_null($Locale)) {
+        if (is_null($Locale)) {
             $Locale = QUI::getLocale();
         }
 
-        $localeVar = 'country.'.$this->getCode();
+        $localeVar = 'country.' . $this->getCode();
 
         if ($Locale->exists('quiqqer/countries', $localeVar)) {
             return $Locale->get('quiqqer/countries', $localeVar);
@@ -164,9 +171,9 @@ class Country extends QUI\QDOM
      *
      * @return array
      */
-    public function getLanguages()
+    public function getLanguages(): array
     {
-        return \array_map(function ($data) {
+        return array_map(function ($data) {
             return $data['language'];
         }, $this->languages);
     }
@@ -177,8 +184,49 @@ class Country extends QUI\QDOM
      *
      * @return string
      */
-    public function getLocaleCode()
+    public function getLocaleCode(): string
     {
-        return \strtolower($this->getLang()).'_'.\strtoupper($this->getCode());
+        return strtolower($this->getLang()) . '_' . strtoupper($this->getCode());
+    }
+
+    /**
+     * Is this country in the EU
+     *
+     * @return bool
+     */
+    public function isEU(): bool
+    {
+        switch ($this->getCode()) {
+            case 'AT':
+            case 'BE':
+            case 'BG':
+            case 'HR':
+            case 'CY':
+            case 'CZ':
+            case 'DK':
+            case 'EE':
+            case 'FI':
+            case 'FR':
+            case 'DE':
+            case 'GR':
+            case 'HU':
+            case 'IE':
+            case 'IT':
+            case 'LV':
+            case 'LT':
+            case 'LU':
+            case 'MT':
+            case 'NL':
+            case 'PL':
+            case 'PT':
+            case 'RO':
+            case 'SK':
+            case 'SI':
+            case 'ES':
+            case 'SE':
+                return true;
+        }
+
+        return false;
     }
 }
