@@ -18,9 +18,18 @@
         "quiqqer\/quiqqer": "*",
         "quiqqer\/utils": "*@dev"
     },
+    "require-dev": {
+        "pestphp/pest": "^2.8",
+        "mockery/mockery": "^1.6"
+    },
     "autoload": {
         "psr-0": {
             "QUI": "src\/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "QUI\\Countries\\": "tests/QUI/Countries"
         }
     }
 }
