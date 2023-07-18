@@ -13,6 +13,8 @@ use PHPUnit\Framework\TestCase;
 use QUI;
 use QUI\Exception;
 
+use function json_encode;
+
 class CountryTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
@@ -219,5 +221,218 @@ class CountryTest extends TestCase
             'languages'            => '{"en":"English"}',
             'currency'             => $currencyCode
         ]))->getCurrency();
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetNameUsesGlobalLocaleIfNullProvided(): void
+    {
+        $localeMock = Mockery::mock(\QUI\Locale::class);
+        $localeMock->shouldReceive('exists')->andReturnFalse();
+
+        Mockery::mock('alias:' . QUI::class)
+            ->shouldReceive('getLocale')
+            ->once()
+            ->withNoArgs()
+            ->andReturn($localeMock);
+
+        (new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ]))->getName();
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetNameReturnsLocaleVariableIfItExists(): void
+    {
+        $expectedResult = 'My string from locale variable';
+
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ]);
+
+        $localeVariable = 'country.US';
+
+        $localeMock = Mockery::mock(\QUI\Locale::class);
+        $localeMock->shouldReceive('exists')
+            ->with('quiqqer/countries', $localeVariable)
+            ->andReturnTrue();
+
+        $localeMock->shouldReceive('get')
+            ->with('quiqqer/countries', $localeVariable)
+            ->andReturn($expectedResult);
+
+        Mockery::mock('alias:' . QUI::class)
+            ->shouldReceive('getLocale')
+            ->once()
+            ->withNoArgs()
+            ->andReturn($localeMock);
+
+        $this->assertEquals($expectedResult, $country->getName());
+    }
+
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetNameReturnsCountriesNameAttributeIfLocaleVariableDoesNotExist(): void
+    {
+        $expectedResult = 'TestCountry';
+
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$',
+            'countries_name'       => $expectedResult
+        ]);
+
+        $localeMock = Mockery::mock(\QUI\Locale::class);
+        $localeMock->shouldReceive('exists')
+            ->with('quiqqer/countries', 'country.US')
+            ->andReturnFalse();
+
+        Mockery::mock('alias:' . QUI::class)
+            ->shouldReceive('getLocale')
+            ->once()
+            ->withNoArgs()
+            ->andReturn($localeMock);
+
+        $this->assertEquals($expectedResult, $country->getName());
+    }
+
+    public function testGetLangReturnsLanguageAttribute()
+    {
+        $expectedResult = 'TestLanguage';
+
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => $expectedResult,
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ]);
+
+        $this->assertEquals($expectedResult, $country->getLang());
+    }
+
+    public function testGetLanguagesReturnsArrayOfLanguages()
+    {
+        $inputData = [
+            [
+                'foo'      => 'bar',
+                'language' => 'EN',
+                'lorem'    => 'ipsum'
+            ],
+            ['language' => 'DE'],
+            [
+                'language' => 'NL',
+                'foo'      => 'bar'
+            ]
+        ];
+
+        $expectedResult = ['EN', 'DE', 'NL'];
+
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => json_encode($inputData),
+            'currency'             => '$'
+        ]);
+
+        $this->assertEquals($expectedResult, $country->getLanguages());
+    }
+
+    public function testGetLocaleCodeReturnsWellFormattedCode()
+    {
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'EN',
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ]);
+
+        $this->assertEquals('en_US', $country->getLocaleCode());
+    }
+
+    public static function isEuReturnsTrueOnAllEuCountriesProvider(): iterable
+    {
+        $euCountryCodes = [
+            'BE',
+            'BG',
+            'DK',
+            'DE',
+            'EE',
+            'FI',
+            'FR',
+            'GR',
+            'IE',
+            'IT',
+            'HR',
+            'LV',
+            'LT',
+            'LU',
+            'MT',
+            'NL',
+            'AT',
+            'PL',
+            'PT',
+            'RO',
+            'SE',
+            'SK',
+            'SI',
+            'ES',
+            'CZ',
+            'HU',
+            'CY'
+        ];
+
+        foreach ($euCountryCodes as $euCountryCode) {
+            yield [
+                new Country([
+                    'countries_iso_code_2' => $euCountryCode,
+                    'countries_iso_code_3' => 'USA',
+                    'countries_id'         => 1,
+                    'language'             => 'EN',
+                    'languages'            => '{"en":"English"}',
+                    'currency'             => '$'
+                ])
+            ];
+        }
+    }
+
+    #[DataProvider('isEuReturnsTrueOnAllEuCountriesProvider')]
+    public function testIsEuReturnsTrueOnAllEuCountries(Country $country): void
+    {
+        $this->assertTrue($country->isEU());
+    }
+
+    public function testIsEuReturnsFalseForNonEuCountry()
+    {
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'EN',
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ]);
+
+        $this->assertFalse($country->isEU());
     }
 }
