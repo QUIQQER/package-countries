@@ -31,5 +31,27 @@
         "psr-4": {
             "QUI\\Countries\\": "tests/QUI/Countries"
         }
+    },
+    "repositories": {
+        "qassets": {
+            "type": "composer",
+            "url": "https://assets.quiqqer.com"
+        },
+        "qcomposer": {
+            "type": "composer",
+            "url": "https://composer.quiqqer.com"
+        },
+        "qupdate": {
+            "type": "composer",
+            "url": "https://update.quiqqer.com"
+        }
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "allow-plugins": {
+            "composer/installers": true,
+            "pestphp/pest-plugin": true,
+            "oomphinc/composer-installers-extender": true
+        }
     }
 }
