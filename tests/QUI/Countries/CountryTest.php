@@ -3,196 +3,221 @@
 namespace QUI\Countries;
 
 use Mockery;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
+
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\PreserveGlobalState;
+use PHPUnit\Framework\Attributes\RunInSeparateProcess;
+use PHPUnit\Framework\TestCase;
+
 use QUI;
 use QUI\Exception;
 
-use function expect;
-use function test;
+class CountryTest extends TestCase
+{
+    use MockeryPHPUnitIntegration;
 
-test('that constructor is throwing exceptions on missing arguments', function (array $parameters) {
-    new Country($parameters);
-})->with([
-    'missing countries_iso_code_2' => [[]],
-    'missing countries_iso_code_3' => [
-        [
-            'countries_iso_code_2' => 'US'
-        ]
-    ],
-    'missing countries_id'         => [
-        [
-            'countries_iso_code_2' => 'US',
-            'countries_iso_code_3' => 'USA'
-        ]
-    ],
-    'missing language'             => [
-        [
-            'countries_iso_code_2' => 'US',
-            'countries_iso_code_3' => 'USA',
-            'countries_id'         => 1
-        ]
-    ],
-    'missing languages'            => [
-        [
-            'countries_iso_code_2' => 'US',
-            'countries_iso_code_3' => 'USA',
-            'countries_id'         => 1,
-            'language'             => 'English'
-        ]
-    ],
-    'missing currency'             => [
-        [
+    public static function constructorThrowsExceptionOnMissingArgumentsProvider(): array
+    {
+        return [
+            'missing countries_iso_code_2' => [[]],
+            'missing countries_iso_code_3' => [
+                [
+                    'countries_iso_code_2' => 'US'
+                ]
+            ],
+            'missing countries_id'         => [
+                [
+                    'countries_iso_code_2' => 'US',
+                    'countries_iso_code_3' => 'USA'
+                ]
+            ],
+            'missing language'             => [
+                [
+                    'countries_iso_code_2' => 'US',
+                    'countries_iso_code_3' => 'USA',
+                    'countries_id'         => 1
+                ]
+            ],
+            'missing languages'            => [
+                [
+                    'countries_iso_code_2' => 'US',
+                    'countries_iso_code_3' => 'USA',
+                    'countries_id'         => 1,
+                    'language'             => 'English'
+                ]
+            ],
+            'missing currency'             => [
+                [
+                    'countries_iso_code_2' => 'US',
+                    'countries_iso_code_3' => 'USA',
+                    'countries_id'         => 1,
+                    'language'             => 'English',
+                    'languages'            => '{"en":"English"}'
+                ]
+            ]
+        ];
+    }
+
+    #[DataProvider('constructorThrowsExceptionOnMissingArgumentsProvider')]
+    public function testConstructorThrowsExceptionOnMissingArguments($parameters): void
+    {
+        $this->expectException(Exception::class);
+
+        new Country($parameters);
+    }
+
+    public function testConstructorWorksWithoutExceptionsOnCorrectArguments(): void
+    {
+        $parameters = [
             'countries_iso_code_2' => 'US',
             'countries_iso_code_3' => 'USA',
             'countries_id'         => 1,
             'language'             => 'English',
-            'languages'            => '{"en":"English"}'
-        ]
-    ]
-])->throws(Exception::class);
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ];
 
-test('that constructor works without exceptions on correct arguments', function () {
-    $parameters = [
-        'countries_iso_code_2' => 'US',
-        'countries_iso_code_3' => 'USA',
-        'countries_id'         => 1,
-        'language'             => 'English',
-        'languages'            => '{"en":"English"}',
-        'currency'             => '$'
-    ];
+        $country = new Country($parameters);
 
-    expect(
-        new Country($parameters)
-    )->toBeInstanceOf(Country::class);
-});
+        $this->assertInstanceOf(Country::class, $country);
+    }
 
-test('getCode returns correct codes with different parameters', function () {
-    $isoCode2 = 'US';
-    $isoCode3 = 'USA';
+    public function testGetCodeReturnsCorrectCodesWithDifferentParameters(): void
+    {
+        $isoCode2 = 'US';
+        $isoCode3 = 'USA';
 
-    $country = new Country([
-        'countries_iso_code_2' => $isoCode2,
-        'countries_iso_code_3' => $isoCode3,
-        'countries_id'         => 1,
-        'language'             => 'English',
-        'languages'            => '{"en":"English"}',
-        'currency'             => '$'
-    ]);
+        $country = new Country([
+            'countries_iso_code_2' => $isoCode2,
+            'countries_iso_code_3' => $isoCode3,
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ]);
 
-    expect($country->getCode())->toBe($isoCode2)
-        ->and($country->getCode('countries_iso_code_2'))->toBe($isoCode2)
-        ->and($country->getCode('countries_iso_code_3'))->toBe($isoCode3)
-        ->and($country->getCode('foo'))->toBe($isoCode2);
-});
+        $this->assertSame($isoCode2, $country->getCode());
+        $this->assertSame($isoCode2, $country->getCode('countries_iso_code_2'));
+        $this->assertSame($isoCode3, $country->getCode('countries_iso_code_3'));
+        $this->assertSame($isoCode2, $country->getCode('foo'));
+    }
 
-test('getCodeToLower returns correct codes with different parameters', function () {
-    $country = new Country([
-        'countries_iso_code_2' => 'US',
-        'countries_iso_code_3' => 'USA',
-        'countries_id'         => 1,
-        'language'             => 'English',
-        'languages'            => '{"en":"English"}',
-        'currency'             => '$'
-    ]);
+    public function testGetCodeToLowerReturnsCorrectCodesWithDifferentParameters(): void
+    {
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ]);
 
-    expect($country->getCodeToLower())->toBe('us')
-        ->and($country->getCodeToLower('countries_iso_code_2'))->toBe('us')
-        ->and($country->getCodeToLower('countries_iso_code_3'))->toBe('usa')
-        ->and($country->getCodeToLower('foo'))->toBe('us');
-});
+        $this->assertSame('us', $country->getCodeToLower());
+        $this->assertSame('us', $country->getCodeToLower('countries_iso_code_2'));
+        $this->assertSame('usa', $country->getCodeToLower('countries_iso_code_3'));
+        $this->assertSame('us', $country->getCodeToLower('foo'));
+    }
 
-test('getCurrencyCode returns correct currency', function () {
-    $currency = '$';
+    public function testGetCurrencyCodeReturnsCorrectCurrency(): void
+    {
+        $currency = '$';
 
-    $country = new Country([
-        'countries_iso_code_2' => 'US',
-        'countries_iso_code_3' => 'USA',
-        'countries_id'         => 1,
-        'language'             => 'English',
-        'languages'            => '{"en":"English"}',
-        'currency'             => $currency
-    ]);
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => $currency
+        ]);
 
-    expect($country->getCurrencyCode())->toBe($currency);
-});
+        $this->assertSame($currency, $country->getCurrencyCode());
+    }
 
-test('getCurrency throws exception if quiqqer/currency not installed', function () {
-    Mockery::mock('overload:' . QUI::class)
-        ->shouldReceive('getPackage')
-        ->once()
-        ->with('quiqqer/currency')
-        ->andThrow(Exception::class);
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetCurrencyThrowsExceptionIfQuiqqerCurrencyNotInstalled(): void
+    {
+        Mockery::mock('overload:' . QUI::class)
+            ->shouldReceive('getPackage')
+            ->once()
+            ->with('quiqqer/currency')
+            ->andThrow(Exception::class);
 
-    $country = new Country([
-        'countries_iso_code_2' => 'US',
-        'countries_iso_code_3' => 'USA',
-        'countries_id'         => 1,
-        'language'             => 'English',
-        'languages'            => '{"en":"English"}',
-        'currency'             => '$'
-    ]);
+        $country = new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => '$'
+        ]);
 
-    $country->getCurrency();
-})->throws(Exception::class);
+        $this->expectException(Exception::class);
+        $country->getCurrency();
+    }
 
-test('getCurrency returns currency object if currency exists', function () {
-    $currencyCode = '$';
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetCurrencyReturnsCurrencyObjectIfCurrencyExists(): void
+    {
+        $currencyCode = '$';
 
-    Mockery::mock('overload:' . QUI::class)
-        ->shouldReceive('getPackage')
-        ->once()
-        ->with('quiqqer/currency');
+        Mockery::mock('overload:' . QUI::class)
+            ->shouldReceive('getPackage')
+            ->once()
+            ->with('quiqqer/currency');
 
-    $currencyMock = Mockery::mock('QUI\ERP\Currency\Currency');
+        $currencyMock = Mockery::mock(QUI\ERP\Currency\Currency::class);
 
-    Mockery::mock('overload:' . QUI\ERP\Currency\Handler::class)
-        ->shouldReceive('getCurrency')
-        ->once()
-        ->with($currencyCode)
-        ->andReturn($currencyMock);
+        Mockery::mock('overload:' . QUI\ERP\Currency\Handler::class)
+            ->shouldReceive('getCurrency')
+            ->once()
+            ->with($currencyCode)
+            ->andReturn($currencyMock);
 
+        (new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => $currencyCode
+        ]))->getCurrency();
+    }
 
-    (new Country([
-        'countries_iso_code_2' => 'US',
-        'countries_iso_code_3' => 'USA',
-        'countries_id'         => 1,
-        'language'             => 'English',
-        'languages'            => '{"en":"English"}',
-        'currency'             => $currencyCode
-    ]))->getCurrency();
-});
+    #[PreserveGlobalState(false)]
+    #[RunInSeparateProcess]
+    public function testGetCurrencyReturnsDefaultCurrencyObjectIfCurrencyDoesNotExist(): void
+    {
+        $currencyCode = '$';
 
-test('getCurrency returns default currency object if currency does not exist', function () {
-    $currencyCode = '$';
+        Mockery::mock('alias:' . QUI::class)
+            ->shouldReceive('getPackage')
+            ->once()
+            ->with('quiqqer/currency');
 
-    Mockery::mock('alias:' . QUI::class)
-        ->shouldReceive('getPackage')
-        ->once()
-        ->with('quiqqer/currency');
+        $currencyHandlerMock = Mockery::mock('alias:' . QUI\ERP\Currency\Handler::class);
 
-    $currencyMock = Mockery::mock('QUI\ERP\Currency\Currency');
+        $currencyHandlerMock->shouldReceive('getCurrency')
+            ->once()
+            ->with($currencyCode)
+            ->andThrow(Mockery::mock(Exception::class));
 
-    $currencyHandlerMock = Mockery::mock('alias:QUI\ERP\Currency\Handler');
+        $currencyHandlerMock->shouldReceive('getDefaultCurrency')
+            ->once()
+            ->withNoArgs()
+            ->andReturn(Mockery::mock(QUI\ERP\Currency\Currency::class));
 
-    $currencyHandlerMock->shouldReceive('getCurrency')
-        ->twice()
-        ->with($currencyCode)
-        ->andReturn($currencyMock);
-
-    $currencyHandlerMock->shouldReceive('getDefaultCurrency')
-        ->once()
-        ->andReturnUsing(function () {
-            echo 'hello';
-        });
-//        ->andReturn($currencyMock);
-
-    // TODO: shouldReceive once is ignored
-
-    (new Country([
-        'countries_iso_code_2' => 'US',
-        'countries_iso_code_3' => 'USA',
-        'countries_id'         => 1,
-        'language'             => 'English',
-        'languages'            => '{"en":"English"}',
-        'currency'             => $currencyCode
-    ]))->getCurrency();
-});
+        (new Country([
+            'countries_iso_code_2' => 'US',
+            'countries_iso_code_3' => 'USA',
+            'countries_id'         => 1,
+            'language'             => 'English',
+            'languages'            => '{"en":"English"}',
+            'currency'             => $currencyCode
+        ]))->getCurrency();
+    }
+}
