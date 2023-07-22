@@ -51,7 +51,6 @@
     "config": {
         "allow-plugins": {
             "composer/installers": true,
-            "pestphp/pest-plugin": true,
             "oomphinc/composer-installers-extender": true
         }
     }
