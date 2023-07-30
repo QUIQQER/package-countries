@@ -25,13 +25,14 @@ use function strtoupper;
 class Country extends QUI\QDOM
 {
     /**
-     * @var array
+     * @var array<mixed>
      */
-    protected $languages = [];
+    protected array $languages = [];
 
     /**
-     * constructor
      * If you want a country, use the manager
+     *
+     * @param array<mixed> $params
      *
      * @throws QUI\Exception
      * @example
@@ -157,6 +158,8 @@ class Country extends QUI\QDOM
 
     /**
      * Return all languages in the country
+     *
+     * @return array<string>
      */
     public function getLanguages(): array
     {

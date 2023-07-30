@@ -19,6 +19,9 @@ final class CountryTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 
+    /**
+     * @return array<string, array<mixed>>
+     */
     public static function constructorThrowsExceptionOnMissingArgumentsProvider(): array
     {
         return [
@@ -61,6 +64,10 @@ final class CountryTest extends TestCase
         ];
     }
 
+    /**
+     * @param array<string, array<mixed>> $parameters
+     * @throws \QUI\Exception
+     */
     #[DataProvider('constructorThrowsExceptionOnMissingArgumentsProvider')]
     public function testConstructorThrowsExceptionOnMissingArguments($parameters): void
     {
@@ -370,6 +377,11 @@ final class CountryTest extends TestCase
         $this->assertEquals('en_US', $country->getLocaleCode());
     }
 
+    /**
+     * @return iterable<array<int, \QUI\Countries\Country>>
+     *
+     * @throws \QUI\Exception
+     */
     public static function isEuReturnsTrueOnAllEuCountriesProvider(): iterable
     {
         $euCountryCodes = [

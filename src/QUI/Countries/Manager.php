@@ -18,6 +18,8 @@ final class Manager extends QUI\QDOM
 {
     /**
      * country stack
+     *
+     * @var array<\QUI\Countries\Country> $countries
      */
     private static array $countries = [];
 
@@ -104,6 +106,8 @@ final class Manager extends QUI\QDOM
 
     /**
      * Returns the complete country list
+     *
+     * @return array<\QUI\Countries\Country>
      */
     public static function getCompleteList(): array
     {
@@ -124,6 +128,8 @@ final class Manager extends QUI\QDOM
     /**
      * Return ths country list
      * Only active counries
+     *
+     * @return array<\QUI\Countries\Country>
      */
     public static function getList(): array
     {
@@ -145,7 +151,9 @@ final class Manager extends QUI\QDOM
     }
 
     /**
-     * @param $result
+     * @param array<mixed> $result
+     *
+     * @return array<\QUI\Countries\Country>
      */
     protected static function parseCountryDbData($result): array
     {
@@ -177,7 +185,9 @@ final class Manager extends QUI\QDOM
     /**
      * Return the countries in sorted order
      *
-     * @param callable|null|array $params - optional, sorting function
+     * @param callable|null|array<mixed> $params - optional, sorting function
+     *
+     * @return array<\QUI\Countries\Country>
      */
     public static function getSortedList($params = null): array
     {
@@ -212,6 +222,8 @@ final class Manager extends QUI\QDOM
 
     /**
      * Return all available country codes
+     *
+     * @return array<string>
      */
     public static function getAllCountryCodes(): array
     {
