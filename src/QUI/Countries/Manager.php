@@ -30,8 +30,6 @@ class Manager extends QUI\QDOM
 
     /**
      * Return the real table name
-     *
-     * @return string
      */
     public static function getDataBaseTableName(): string
     {
@@ -42,7 +40,6 @@ class Manager extends QUI\QDOM
      * Chceks if Mixed is a country
      *
      * @param mixed $Mixed
-     * @return boolean
      */
     public static function isCountry($Mixed): bool
     {
@@ -56,7 +53,6 @@ class Manager extends QUI\QDOM
     /**
      * Return the default country
      *
-     * @return Country|null
      * @throws QUI\Exception
      */
     public static function getDefaultCountry(): ?Country
@@ -80,7 +76,6 @@ class Manager extends QUI\QDOM
      * @param String $code - the country code
      * @param string $type (optional) - type of code ("countries_iso_code_2" or "countries_iso_code_3")
      *
-     * @return QUI\Countries\Country
      * @throws QUI\Exception
      * @example
      * $Country = \QUI\Countries\Manager::get('de');
@@ -114,8 +109,6 @@ class Manager extends QUI\QDOM
 
     /**
      * Returns the complete country list
-     *
-     * @return array
      */
     public static function getCompleteList(): array
     {
@@ -136,8 +129,6 @@ class Manager extends QUI\QDOM
     /**
      * Return ths country list
      * Only active counries
-     *
-     * @return array
      */
     public static function getList(): array
     {
@@ -160,7 +151,6 @@ class Manager extends QUI\QDOM
 
     /**
      * @param $result
-     * @return array
      */
     protected static function parseCountryDbData($result): array
     {
@@ -193,7 +183,6 @@ class Manager extends QUI\QDOM
      * Return the countries in sorted order
      *
      * @param callable|null|array $params - optional, sorting function
-     * @return array
      */
     public static function getSortedList($params = null): array
     {
@@ -229,8 +218,6 @@ class Manager extends QUI\QDOM
 
     /**
      * Return all available country codes
-     *
-     * @return array
      */
     public static function getAllCountryCodes(): array
     {
@@ -249,8 +236,6 @@ class Manager extends QUI\QDOM
      * Exist the country code in the database?
      *
      * @param string $code - Country code
-     *
-     * @return bool
      */
     public static function existsCountryCode(string $code): bool
     {

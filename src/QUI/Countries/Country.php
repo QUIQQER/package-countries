@@ -78,8 +78,6 @@ class Country extends QUI\QDOM
      * iso_code_2 or iso_code_2
      *
      * @param string [$type] - countries_iso_code_2 or countries_iso_code_3
-     *
-     * @return string
      */
     public function getCode($type = 'countries_iso_code_2'): string
     {
@@ -97,7 +95,6 @@ class Country extends QUI\QDOM
      * Return the country code in lowercase
      *
      * @param string [$type]
-     * @return string
      */
     public function getCodeToLower($type = 'countries_iso_code_2'): string
     {
@@ -106,8 +103,6 @@ class Country extends QUI\QDOM
 
     /**
      * Return the currency object
-     *
-     * @return string
      */
     public function getCurrencyCode(): string
     {
@@ -116,8 +111,6 @@ class Country extends QUI\QDOM
 
     /**
      * Return the currency of the country
-     *
-     * @return QUI\ERP\Currency\Currency
      */
     public function getCurrency(): QUI\ERP\Currency\Currency
     {
@@ -139,7 +132,6 @@ class Country extends QUI\QDOM
      * observed System_Locale
      *
      * @param QUI\Locale [$Locale] (optional) - Locale object that is used for the name translation [default: \QUI::getLocale()]
-     * @return string
      */
     public function getName($Locale = null): string
     {
@@ -168,8 +160,6 @@ class Country extends QUI\QDOM
 
     /**
      * Return all languages in the country
-     *
-     * @return array
      */
     public function getLanguages(): array
     {
@@ -181,8 +171,6 @@ class Country extends QUI\QDOM
     /**
      * Return the locale string of the country
      * en_US, en_GB, de_DE, de_AT
-     *
-     * @return string
      */
     public function getLocaleCode(): string
     {
@@ -191,8 +179,6 @@ class Country extends QUI\QDOM
 
     /**
      * Is this country in the EU
-     *
-     * @return bool
      */
     public function isEU(): bool
     {
