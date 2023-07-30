@@ -204,11 +204,10 @@ class Manager extends QUI\QDOM
         $countries = $complete ? self::getCompleteList() : self::getList();
 
         if ($sort === null) {
-            $sort = static function ($CountryA, $CountryB) : int {
-                /* @var $CountryA Country */
-                /* @var $CountryB Country */
-                return \strnatcmp($CountryA->getName(), $CountryB->getName());
-            };
+            $sort = static fn(Country $CountryA, Country $CountryB): int => \strnatcmp(
+                $CountryA->getName(),
+                $CountryB->getName()
+            );
         }
 
         \usort($countries, $sort);
