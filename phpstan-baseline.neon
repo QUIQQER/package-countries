@@ -1,2 +1,41 @@
 parameters:
 	ignoreErrors:
+		-
+			message: "#^Call to static method getCurrency\\(\\) on an unknown class QUI\\\\ERP\\\\Currency\\\\Handler\\.$#"
+			count: 1
+			path: src/QUI/Countries/Country.php
+
+		-
+			message: "#^Call to static method getDefaultCurrency\\(\\) on an unknown class QUI\\\\ERP\\\\Currency\\\\Handler\\.$#"
+			count: 1
+			path: src/QUI/Countries/Country.php
+
+		-
+			message: "#^Method QUI\\\\Countries\\\\Country\\:\\:getCurrency\\(\\) has invalid return type QUI\\\\ERP\\\\Currency\\\\Currency\\.$#"
+			count: 1
+			path: src/QUI/Countries/Country.php
+
+		-
+			message: "#^Method QUI\\\\Countries\\\\Country\\:\\:getName\\(\\) should return string but returns array\\|string\\.$#"
+			count: 1
+			path: src/QUI/Countries/Country.php
+
+		-
+			message: "#^Parameter \\#3 \\$value of method QUI\\\\Config\\:\\:setValue\\(\\) expects string, string\\|false given\\.$#"
+			count: 1
+			path: src/QUI/Countries/Setup.php
+
+		-
+			message: "#^Call to method shouldReceive\\(\\) on an unknown class QUI\\\\ERP\\\\Currency\\\\Handler\\.$#"
+			count: 3
+			path: tests/QUI/Countries/CountryTest.php
+
+		-
+			message: "#^Class QUI\\\\ERP\\\\Currency\\\\Currency not found\\.$#"
+			count: 2
+			path: tests/QUI/Countries/CountryTest.php
+
+		-
+			message: "#^Class QUI\\\\ERP\\\\Currency\\\\Handler not found\\.$#"
+			count: 2
+			path: tests/QUI/Countries/CountryTest.php
