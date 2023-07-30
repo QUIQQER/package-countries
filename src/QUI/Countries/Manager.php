@@ -231,7 +231,6 @@ final class Manager extends QUI\QDOM
         $countries = self::getList();
 
         foreach ($countries as $Country) {
-            /* @var $Country Country */
             $result[] = $Country->getCode();
         }
 
