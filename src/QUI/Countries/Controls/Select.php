@@ -7,6 +7,7 @@
 namespace QUI\Countries\Controls;
 
 use QUI;
+use QUI\Countries\Country;
 use QUI\Countries\Manager;
 
 /**
@@ -80,14 +81,14 @@ class Select extends QUI\Control
                 }
             }
 
-            if (!$Country) {
+            if (!$Country instanceof Country) {
                 try {
                     $Country = Manager::getDefaultCountry();
                 } catch (QUI\Exception $Exception) {
                 }
             }
 
-            if ($Country) {
+            if ($Country instanceof Country) {
                 $selected = $Country->getCode();
             }
         }

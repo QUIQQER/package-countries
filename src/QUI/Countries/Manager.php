@@ -61,7 +61,7 @@ class Manager extends QUI\QDOM
      */
     public static function getDefaultCountry(): ?Country
     {
-        if (self::$DefaultCountry === null) {
+        if (!self::$DefaultCountry instanceof Country) {
             try {
                 self::$DefaultCountry = QUI\Countries\Manager::get(
                     QUI::conf('globals', 'country')
