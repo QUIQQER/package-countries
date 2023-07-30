@@ -16,7 +16,8 @@
     },
     "require": {
         "quiqqer\/quiqqer": "*",
-        "quiqqer\/utils": "*@dev"
+        "quiqqer\/utils": "*@dev",
+        "ext-json": "*"
     },
     "require-dev": {
         "mockery/mockery": "^1.6",
