@@ -212,11 +212,7 @@ class Manager extends QUI\QDOM
             }
         }
 
-        if ($complete) {
-            $countries = self::getCompleteList();
-        } else {
-            $countries = self::getList();
-        }
+        $countries = $complete ? self::getCompleteList() : self::getList();
 
         if ($sort === null) {
             $sort = function ($CountryA, $CountryB) {
