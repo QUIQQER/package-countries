@@ -215,7 +215,7 @@ class Manager extends QUI\QDOM
         $countries = $complete ? self::getCompleteList() : self::getList();
 
         if ($sort === null) {
-            $sort = function ($CountryA, $CountryB) {
+            $sort = function ($CountryA, $CountryB): int {
                 /* @var $CountryA Country */
                 /* @var $CountryB Country */
                 return \strnatcmp($CountryA->getName(), $CountryB->getName());
