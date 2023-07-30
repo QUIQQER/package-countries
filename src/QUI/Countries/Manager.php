@@ -26,7 +26,7 @@ class Manager extends QUI\QDOM
     /**
      * @var Country
      */
-    private static $DefaultCountry = null;
+    private static $DefaultCountry;
 
     /**
      * Return the real table name
