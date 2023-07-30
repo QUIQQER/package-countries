@@ -6,7 +6,6 @@
 
 namespace QUI\Countries;
 
-use Locale;
 use QUI;
 
 use function array_map;
