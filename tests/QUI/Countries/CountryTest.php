@@ -311,7 +311,7 @@ final class CountryTest extends TestCase
         $this->assertEquals($expectedResult, $country->getName());
     }
 
-    public function testGetLangReturnsLanguageAttribute()
+    public function testGetLangReturnsLanguageAttribute(): void
     {
         $expectedResult = 'TestLanguage';
 
@@ -327,7 +327,7 @@ final class CountryTest extends TestCase
         $this->assertEquals($expectedResult, $country->getLang());
     }
 
-    public function testGetLanguagesReturnsArrayOfLanguages()
+    public function testGetLanguagesReturnsArrayOfLanguages(): void
     {
         $inputData = [
             [
@@ -356,7 +356,7 @@ final class CountryTest extends TestCase
         $this->assertEquals($expectedResult, $country->getLanguages());
     }
 
-    public function testGetLocaleCodeReturnsWellFormattedCode()
+    public function testGetLocaleCodeReturnsWellFormattedCode(): void
     {
         $country = new Country([
             'countries_iso_code_2' => 'US',
@@ -422,7 +422,7 @@ final class CountryTest extends TestCase
         $this->assertTrue($country->isEU());
     }
 
-    public function testIsEuReturnsFalseForNonEuCountry()
+    public function testIsEuReturnsFalseForNonEuCountry(): void
     {
         $country = new Country([
             'countries_iso_code_2' => 'US',

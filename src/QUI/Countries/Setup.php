@@ -20,7 +20,7 @@ final class Setup extends QUI\QDOM
      * Country setup
      * Import the database
      */
-    public static function setup()
+    public static function setup(): void
     {
         $Config  = QUI::getPackage('quiqqer/countries')->getConfig();
         $dataMd5 = $Config->getValue('general', 'dataMd5');

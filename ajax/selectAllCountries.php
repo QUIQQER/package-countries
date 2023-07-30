@@ -13,7 +13,7 @@ use QUI\Countries\Manager;
  */
 QUI::$Ajax->registerFunction(
     'package_quiqqer_countries_ajax_selectAllCountries',
-    function () {
+    function (): void {
         QUI::getDataBase()->update(
             Manager::getDataBaseTableName(),
             ['active' => 1],

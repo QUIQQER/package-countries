@@ -13,7 +13,7 @@ use QUI\Countries\Manager;
  */
 QUI::$Ajax->registerFunction(
     'package_quiqqer_countries_ajax_changeCountryStatus',
-    function ($code, $status) {
+    function ($code, $status): void {
         // check if country exists
         Manager::get($code);
 
