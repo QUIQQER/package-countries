@@ -30,7 +30,7 @@ class Country extends QUI\QDOM
     protected $languages = [];
 
     /**
-     * construcor
+     * constructor
      * If you want a country, use the manager
      *
      * @param array [$params]
