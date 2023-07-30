@@ -40,7 +40,7 @@ class Country extends QUI\QDOM
      * $Country->getName()
      *
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         if (!isset($params['countries_iso_code_2'])) {
             throw new QUI\Exception('Parameter countries_iso_code_2 fehlt');
