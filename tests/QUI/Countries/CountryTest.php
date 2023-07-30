@@ -15,7 +15,7 @@ use QUI\Exception;
 
 use function json_encode;
 
-class CountryTest extends TestCase
+final class CountryTest extends TestCase
 {
     use MockeryPHPUnitIntegration;
 

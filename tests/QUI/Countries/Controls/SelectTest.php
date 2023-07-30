@@ -4,7 +4,7 @@ namespace QUI\Countries\Controls;
 
 use PHPUnit\Framework\TestCase;
 
-class SelectTest extends TestCase
+final class SelectTest extends TestCase
 {
     public function testConstructorSetsDefaultAttributes(): void
     {

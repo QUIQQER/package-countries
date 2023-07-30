@@ -14,7 +14,7 @@ use QUI;
  * @author  www.pcsg.de (Henning Leutz)
  * @package QUI\Countries
  */
-class Manager extends QUI\QDOM
+final class Manager extends QUI\QDOM
 {
     /**
      * country stack

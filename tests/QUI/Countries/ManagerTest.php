@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use QUI;
 use stdClass;
 
-class ManagerTest extends TestCase
+final class ManagerTest extends TestCase
 {
     public function testIsCountryWithCountryObject(): void
     {

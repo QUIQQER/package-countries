@@ -14,7 +14,7 @@ use QUI;
  * @author  www.pcsg.de (Henning Leutz)
  * @package quiqqer/countries
  */
-class Setup extends QUI\QDOM
+final class Setup extends QUI\QDOM
 {
     /**
      * Country setup
