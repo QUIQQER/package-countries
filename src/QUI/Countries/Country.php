@@ -173,7 +173,7 @@ class Country extends QUI\QDOM
      */
     public function getLanguages(): array
     {
-        return array_map(function ($data) {
+        return array_map(static function ($data) {
             return $data['language'];
         }, $this->languages);
     }
