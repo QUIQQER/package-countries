@@ -12,7 +12,7 @@ use QUI\Cache\Manager as CacheManager;
  *
  * @return array
  */
-QUI::$Ajax->registerFunction(
+QUI::getAjax()->registerFunction(
     'package_quiqqer_countries_ajax_getCompleteCountries',
     function ($lang) {
         if (!isset($lang)) {
