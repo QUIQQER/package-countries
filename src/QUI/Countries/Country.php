@@ -33,8 +33,6 @@ class Country extends QUI\QDOM
      * constructor
      * If you want a country, use the manager
      *
-     * @param array [$params]
-     *
      * @throws QUI\Exception
      * @example
      * $Country = \QUI\Countries\Manager::get('de');
