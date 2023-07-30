@@ -8,6 +8,8 @@ namespace QUI\Countries;
 
 use QUI;
 
+use function is_string;
+
 /**
  * Country Manager
  *
@@ -56,9 +58,13 @@ final class Manager extends QUI\QDOM
     {
         if (!self::$DefaultCountry instanceof Country) {
             try {
-                self::$DefaultCountry = QUI\Countries\Manager::get(
-                    QUI::conf('globals', 'country')
-                );
+                $defaultCountryInConfig = QUI::conf('globals', 'country');
+
+                if (!is_string($defaultCountryInConfig)) {
+                    throw new QUI\Exception('Illegal country value in config');
+                }
+
+                self::$DefaultCountry = QUI\Countries\Manager::get($defaultCountryInConfig);
             } catch (QUI\Exception $Exception) {
                 self::$DefaultCountry = QUI\Countries\Manager::get('de');
             }
