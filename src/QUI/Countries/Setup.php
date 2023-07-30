@@ -21,10 +21,17 @@ final class Setup extends QUI\QDOM
     /**
      * Country setup
      * Import the database
+     * @throws \QUI\Exception
+     * @throws \JsonException
      */
     public static function setup(): void
     {
         $Config  = QUI::getPackage('quiqqer/countries')->getConfig();
+
+        if (!$Config instanceof QUI\Config) {
+            throw new QUI\Exception('Could not load config of package "quiqqer/countries"');
+        }
+
         $dataMd5 = $Config->getValue('general', 'dataMd5');
 
         // Countries
