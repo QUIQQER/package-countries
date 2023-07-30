@@ -18,15 +18,10 @@ class Manager extends QUI\QDOM
 {
     /**
      * country stack
-     *
-     * @var array
      */
-    private static $countries = [];
+    private static array $countries = [];
 
-    /**
-     * @var Country
-     */
-    private static $DefaultCountry;
+    private static ?Country $DefaultCountry;
 
     /**
      * Return the real table name
