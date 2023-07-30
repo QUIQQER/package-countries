@@ -8,6 +8,8 @@ namespace QUI\Countries;
 
 use QUI;
 
+use const JSON_THROW_ON_ERROR;
+
 /**
  * Country setup
  *
@@ -39,7 +41,14 @@ final class Setup extends QUI\QDOM
             return;
         }
 
-        $data  = \json_decode(\file_get_contents($path.'/db/intl.json'), true);
+        $intlJson = \file_get_contents($path . '/db/intl.json');
+
+        if (!$intlJson) {
+            throw new QUI\Exception('Could not read intl.json file');
+        }
+
+        $data  = \json_decode($intlJson, true, 512, JSON_THROW_ON_ERROR);
+
         $table = Manager::getDataBaseTableName();
 
         $Table = QUI::getDataBase()->table();
