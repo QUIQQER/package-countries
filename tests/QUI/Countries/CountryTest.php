@@ -69,7 +69,7 @@ final class CountryTest extends TestCase
      * @throws \QUI\Exception
      */
     #[DataProvider('constructorThrowsExceptionOnMissingArgumentsProvider')]
-    public function testConstructorThrowsExceptionOnMissingArguments($parameters): void
+    public function testConstructorThrowsExceptionOnMissingArguments(array $parameters): void
     {
         $this->expectException(Exception::class);
 

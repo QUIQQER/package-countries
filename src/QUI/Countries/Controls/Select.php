@@ -21,7 +21,7 @@ class Select extends QUI\Control
     /**
      * @param array<mixed> $attributes
      */
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         // default
         $this->setAttributes([
