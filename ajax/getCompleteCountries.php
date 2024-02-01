@@ -4,8 +4,8 @@
  * This file contains package_quiqqer_countries_ajax_getCompleteCountries
  */
 
-use QUI\Countries\Manager;
 use QUI\Cache\Manager as CacheManager;
+use QUI\Countries\Manager;
 
 /**
  * Return the countries
@@ -19,7 +19,7 @@ QUI::$Ajax->registerFunction(
             $lang = QUI::getUserBySession()->getLocale()->getCurrent();
         }
 
-        $cacheName = 'quiqqer/countries/complete-list/'.$lang;
+        $cacheName = 'quiqqer/countries/complete-list/' . $lang;
 
         try {
             return CacheManager::get($cacheName);
