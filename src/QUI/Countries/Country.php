@@ -32,7 +32,7 @@ class Country extends QUI\QDOM
      * construcor
      * If you want a country, use the manager
      *
-     * @param array [$params]
+     * @param array $params
      *
      * @throws QUI\Exception
      * @example
@@ -40,7 +40,7 @@ class Country extends QUI\QDOM
      * $Country->getName()
      *
      */
-    public function __construct($params = [])
+    public function __construct(array $params = [])
     {
         if (!isset($params['countries_iso_code_2'])) {
             throw new QUI\Exception('Parameter countries_iso_code_2 fehlt');

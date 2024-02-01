@@ -8,6 +8,15 @@ namespace QUI\Countries;
 
 use QUI;
 
+use function explode;
+use function file_get_contents;
+use function json_decode;
+use function json_encode;
+use function md5_file;
+use function str_replace;
+use function strlen;
+use function strpos;
+
 /**
  * Country setup
  *
@@ -22,13 +31,13 @@ class Setup extends QUI\QDOM
      */
     public static function setup()
     {
-        $Config  = QUI::getPackage('quiqqer/countries')->getConfig();
+        $Config = QUI::getPackage('quiqqer/countries')->getConfig();
         $dataMd5 = $Config->getValue('general', 'dataMd5');
 
         // Countries
-        $path    = \str_replace('src/QUI/Countries/Setup.php', '', __FILE__);
-        $file    = $path.'/db/intl.json';
-        $fileMd5 = \md5_file($file);
+        $path = str_replace('src/QUI/Countries/Setup.php', '', __FILE__);
+        $file = $path . '/db/intl.json';
+        $fileMd5 = md5_file($file);
 
         $Table = QUI::getDataBase()->table();
         $Table->addColumn(Manager::getDataBaseTableName(), [
@@ -39,21 +48,21 @@ class Setup extends QUI\QDOM
             return;
         }
 
-        $data  = \json_decode(\file_get_contents($path.'/db/intl.json'), true);
+        $data = json_decode(file_get_contents($path . '/db/intl.json'), true);
         $table = Manager::getDataBaseTableName();
 
         $Table = QUI::getDataBase()->table();
         $Table->delete($table);
 
         $Table->addColumn($table, [
-            'countries_id'         => 'int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+            'countries_id' => 'int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY',
             'countries_iso_code_2' => 'char(2) NOT NULL',
             'countries_iso_code_3' => 'char(3) NOT NULL',
-            'numeric_code'         => 'char(4) NOT NULL',
-            'language'             => 'char(3) NOT NULL',
-            'languages'            => 'text NOT NULL',
-            'currency'             => 'char(3) NOT NULL',
-            'active'               => 'int(1) NOT NULL DEFAULT 1'
+            'numeric_code' => 'char(4) NOT NULL',
+            'language' => 'char(3) NOT NULL',
+            'languages' => 'text NOT NULL',
+            'currency' => 'char(3) NOT NULL',
+            'active' => 'int(1) NOT NULL DEFAULT 1'
         ]);
 
         foreach ($data as $country => $entry) {
@@ -75,12 +84,12 @@ class Setup extends QUI\QDOM
                 $entry['currency_code'] = '';
             }
 
-            if (\strlen($language) > 3 && \strpos($language, '_') === false) {
+            if (strlen($language) > 3 && strpos($language, '_') === false) {
                 continue;
             }
 
-            if (\strlen($language) > 3) {
-                $language = \explode('_', $language);
+            if (strlen($language) > 3) {
+                $language = explode('_', $language);
                 $language = $language[0];
             }
 
@@ -88,10 +97,10 @@ class Setup extends QUI\QDOM
                 QUI::getDataBase()->insert($table, [
                     'countries_iso_code_2' => $country,
                     'countries_iso_code_3' => $entry['three_letter_code'],
-                    'numeric_code'         => $entry['numeric_code'],
-                    'language'             => $language,
-                    'languages'            => \json_encode($entry['languages']),
-                    'currency'             => $entry['currency_code']
+                    'numeric_code' => $entry['numeric_code'],
+                    'language' => $language,
+                    'languages' => json_encode($entry['languages']),
+                    'currency' => $entry['currency_code']
                 ]);
             } catch (QUI\Database\Exception $Exception) {
                 QUI\System\Log::addWarning($Exception->getMessage());

@@ -49,7 +49,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCurrencyCode()
     {
-        $Country  = QUI\Countries\Manager::get('de');
+        $Country = QUI\Countries\Manager::get('de');
         $currency = $Country->getCurrencyCode();
 
         $this->assertEquals($currency, 'EUR');
@@ -57,7 +57,7 @@ class CountryTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCurrency()
     {
-        $Country  = QUI\Countries\Manager::get('de');
+        $Country = QUI\Countries\Manager::get('de');
         $Currency = $Country->getCurrency();
 
         $this->assertEquals($Currency->getCode(), 'EUR');
@@ -66,8 +66,8 @@ class CountryTest extends \PHPUnit_Framework_TestCase
     public function testGetName()
     {
         $Country = QUI\Countries\Manager::get('pl');
-        $code    = $Country->getAttribute('countries_iso_code_2');
-        $name    = $Country->getName();
+        $code = $Country->getAttribute('countries_iso_code_2');
+        $name = $Country->getName();
 
         $localeVar = 'country.' . $code;
 
