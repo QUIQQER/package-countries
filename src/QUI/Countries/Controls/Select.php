@@ -25,7 +25,7 @@ class Select extends QUI\Control
      *
      * @param array $attributes
      */
-    public function __construct($attributes = [])
+    public function __construct(array $attributes = [])
     {
         // default
         $this->setAttributes([
@@ -46,7 +46,7 @@ class Select extends QUI\Control
      * @see \QUI\Control::create()
      *
      */
-    public function create()
+    public function create(): string
     {
         $countries = Manager::getSortedList();
         $result = '<select data-qui="package/quiqqer/countries/bin/controls/Select" ';
@@ -79,14 +79,14 @@ class Select extends QUI\Control
             if (isset($_SERVER["GEOIP_COUNTRY_CODE"])) { // only for apache
                 try {
                     $Country = QUI\Countries\Manager::get($_SERVER["GEOIP_COUNTRY_CODE"]);
-                } catch (QUI\Exception $Exception) {
+                } catch (QUI\Exception) {
                 }
             }
 
             if (!$Country) {
                 try {
                     $Country = Manager::getDefaultCountry();
-                } catch (QUI\Exception $Exception) {
+                } catch (QUI\Exception) {
                 }
             }
 
