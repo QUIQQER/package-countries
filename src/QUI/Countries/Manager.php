@@ -29,7 +29,7 @@ class Manager extends QUI\QDOM
     private static array $countries = [];
 
     /**
-     * @var Country
+     * @var ?Country
      */
     private static ?Country $DefaultCountry = null;
 
@@ -49,7 +49,7 @@ class Manager extends QUI\QDOM
      * @param mixed $Mixed
      * @return boolean
      */
-    public static function isCountry($Mixed): bool
+    public static function isCountry(mixed $Mixed): bool
     {
         if (!$Mixed) {
             return false;
@@ -71,7 +71,7 @@ class Manager extends QUI\QDOM
                 self::$DefaultCountry = QUI\Countries\Manager::get(
                     QUI::conf('globals', 'country')
                 );
-            } catch (QUI\Exception $Exception) {
+            } catch (QUI\Exception) {
                 self::$DefaultCountry = QUI\Countries\Manager::get('de');
             }
         }
@@ -197,10 +197,10 @@ class Manager extends QUI\QDOM
     /**
      * Return the countries in sorted order
      *
-     * @param callable|null|array $params - optional, sorting function
+     * @param callable|array|null $params - optional, sorting function
      * @return array
      */
-    public static function getSortedList($params = null): array
+    public static function getSortedList(callable|array $params = null): array
     {
         $complete = false;
         $sort = null;
@@ -267,7 +267,7 @@ class Manager extends QUI\QDOM
             self::get($code);
 
             return true;
-        } catch (QUI\Exception $Exception) {
+        } catch (QUI\Exception) {
         }
 
         return false;

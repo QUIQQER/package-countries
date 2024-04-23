@@ -5,6 +5,7 @@
  */
 
 use QUI\Cache\Manager as CacheManager;
+use QUI\Countries\Country;
 use QUI\Countries\Manager;
 
 /**
@@ -23,7 +24,7 @@ QUI::$Ajax->registerFunction(
 
         try {
             return CacheManager::get($cacheName);
-        } catch (\Exception $Exception) {
+        } catch (Exception) {
         }
 
         $Locale = new QUI\Locale();
@@ -32,7 +33,7 @@ QUI::$Ajax->registerFunction(
         $list = Manager::getSortedList();
         $countries = [];
 
-        /** @var \QUI\Countries\Country $Country */
+        /** @var Country $Country */
         foreach ($list as $Country) {
             $countries[$Country->getCode()] = $Country->getName($Locale);
         }
@@ -41,6 +42,5 @@ QUI::$Ajax->registerFunction(
 
         return $countries;
     },
-    ['lang'],
-    false
+    ['lang']
 );

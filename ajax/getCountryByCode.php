@@ -16,7 +16,7 @@ QUI::$Ajax->registerFunction(
         $countryCode = Orthos::clear($countryCode);
         $codeType = 'countries_iso_code_2';
 
-        if (\mb_strlen($countryCode) > 2) {
+        if (mb_strlen($countryCode) > 2) {
             $codeType = 'countries_iso_code_3';
         }
 
@@ -24,6 +24,5 @@ QUI::$Ajax->registerFunction(
 
         return $Country->getAttributes();
     },
-    ['countryCode'],
-    false
+    ['countryCode']
 );

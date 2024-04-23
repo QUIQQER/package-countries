@@ -84,7 +84,7 @@ class Setup extends QUI\QDOM
                 $entry['currency_code'] = '';
             }
 
-            if (strlen($language) > 3 && strpos($language, '_') === false) {
+            if (strlen($language) > 3 && !str_contains($language, '_')) {
                 continue;
             }
 

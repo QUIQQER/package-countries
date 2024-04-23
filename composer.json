@@ -1,26 +1,27 @@
 {
-    "name": "quiqqer\/countries",
-    "type": "quiqqer-plugin",
-    "description": "Extend QUIQQER with a country database",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Henning Leutz",
-            "email": "leutz@pcsg.de",
-            "homepage": "http:\/\/www.pcsg.de",
-            "role": "Developer"
-        }
-    ],
-    "support": {
-        "email": "support@pcsg.de"
-    },
-    "require": {
-        "quiqqer\/quiqqer": "*",
-        "quiqqer\/utils": "*@dev"
-    },
-    "autoload": {
-        "psr-0": {
-            "QUI": "src\/"
-        }
+  "name": "quiqqer\/countries",
+  "type": "quiqqer-plugin",
+  "description": "Extend QUIQQER with a country database",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Henning Leutz",
+      "email": "leutz@pcsg.de",
+      "homepage": "http:\/\/www.pcsg.de",
+      "role": "Developer"
     }
+  ],
+  "support": {
+    "email": "support@pcsg.de"
+  },
+  "require": {
+    "php": "^8.1",
+    "quiqqer\/quiqqer": "^1|^2",
+    "quiqqer\/utils": "*"
+  },
+  "autoload": {
+    "psr-0": {
+      "QUI": "src\/"
+    }
+  }
 }
