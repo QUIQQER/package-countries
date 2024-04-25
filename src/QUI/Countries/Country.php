@@ -26,10 +26,10 @@ class Country extends QUI\QDOM
     /**
      * @var array
      */
-    protected $languages = [];
+    protected mixed $languages = [];
 
     /**
-     * construcor
+     * constructor
      * If you want a country, use the manager
      *
      * @param array $params
@@ -77,11 +77,11 @@ class Country extends QUI\QDOM
      * Return the country code
      * iso_code_2 or iso_code_2
      *
-     * @param string [$type] - countries_iso_code_2 or countries_iso_code_3
+     * @param string $type [$type] - countries_iso_code_2 or countries_iso_code_3
      *
      * @return string
      */
-    public function getCode($type = 'countries_iso_code_2'): string
+    public function getCode(string $type = 'countries_iso_code_2'): string
     {
         switch ($type) {
             default:
@@ -96,10 +96,10 @@ class Country extends QUI\QDOM
     /**
      * Return the country code in lowercase
      *
-     * @param string [$type]
+     * @param string $type
      * @return string
      */
-    public function getCodeToLower($type = 'countries_iso_code_2'): string
+    public function getCodeToLower(string $type = 'countries_iso_code_2'): string
     {
         return strtolower($this->getCode($type));
     }
@@ -128,7 +128,7 @@ class Country extends QUI\QDOM
             return QUI\ERP\Currency\Handler::getCurrency(
                 $this->getCurrencyCode()
             );
-        } catch (QUI\Exception $Exception) {
+        } catch (QUI\Exception) {
         }
 
         return QUI\ERP\Currency\Handler::getDefaultCurrency();
@@ -138,10 +138,10 @@ class Country extends QUI\QDOM
      * Return the name of the country
      * observed System_Locale
      *
-     * @param QUI\Locale [$Locale] (optional) - Locale object that is used for the name translation [default: \QUI::getLocale()]
+     * @param QUI\Locale|null $Locale (optional) - Locale object that is used for the name translation [default: \QUI::getLocale()]
      * @return string
      */
-    public function getName($Locale = null): string
+    public function getName(QUI\Locale $Locale = null): string
     {
         if (is_null($Locale)) {
             $Locale = QUI::getLocale();
@@ -161,7 +161,7 @@ class Country extends QUI\QDOM
      *
      * @return mixed
      */
-    public function getLang()
+    public function getLang(): mixed
     {
         return $this->getAttribute('language');
     }
