@@ -58,12 +58,12 @@ define('package/quiqqer/countries/bin/controls/backend/Settings', [
                     dataType : 'node',
                     width    : 60
                 }, {
-                    header   : QUILocale.get('quiqqer/quiqqer', 'language.code'),
+                    header   : QUILocale.get('quiqqer/core', 'language.code'),
                     dataIndex: 'code',
                     dataType : 'string',
                     width    : 100
                 }, {
-                    header   : QUILocale.get('quiqqer/quiqqer', 'country'),
+                    header   : QUILocale.get('quiqqer/core', 'country'),
                     dataIndex: 'country',
                     dataType : 'string',
                     width    : 150
