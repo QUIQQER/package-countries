@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `{$TABLE}` (
   `address_format_id` int(11) NOT NULL,
   PRIMARY KEY (`countries_id`),
   KEY `IDX_COUNTRIES_NAME` (`countries_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=240 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=240 ;
 
 --
 -- Daten für Tabelle `{$TABLE}`
