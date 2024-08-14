@@ -1,0 +1,16 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to static method getCurrency\\(\\) on an unknown class QUI\\\\ERP\\\\Currency\\\\Handler\\.$#"
+			count: 1
+			path: src/QUI/Countries/Country.php
+
+		-
+			message: "#^Call to static method getDefaultCurrency\\(\\) on an unknown class QUI\\\\ERP\\\\Currency\\\\Handler\\.$#"
+			count: 1
+			path: src/QUI/Countries/Country.php
+
+		-
+			message: "#^Method QUI\\\\Countries\\\\Country\\:\\:getCurrency\\(\\) has invalid return type QUI\\\\ERP\\\\Currency\\\\Currency\\.$#"
+			count: 2
+			path: src/QUI/Countries/Country.php
