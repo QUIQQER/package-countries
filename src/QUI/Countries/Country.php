@@ -7,6 +7,7 @@
 namespace QUI\Countries;
 
 use QUI;
+use QUI\Exception;
 
 use function array_map;
 use function is_null;
@@ -118,19 +119,22 @@ class Country extends QUI\QDOM
      * Return the currency of the country
      *
      * @return QUI\ERP\Currency\Currency
+     * @throws Exception
      */
-    public function getCurrency(): QUI\ERP\Currency\Currency
+    public function getCurrency(): QUI\ERP\Currency\Currency // @phpstan-ignore-line
     {
         // currency installed?
         QUI::getPackage('quiqqer/currency');
 
         try {
+            // @phpstan-ignore-next-line
             return QUI\ERP\Currency\Handler::getCurrency(
                 $this->getCurrencyCode()
             );
         } catch (QUI\Exception) {
         }
 
+        // @phpstan-ignore-next-line
         return QUI\ERP\Currency\Handler::getDefaultCurrency();
     }
 
@@ -141,7 +145,7 @@ class Country extends QUI\QDOM
      * @param QUI\Locale|null $Locale (optional) - Locale object that is used for the name translation [default: \QUI::getLocale()]
      * @return string
      */
-    public function getName(QUI\Locale $Locale = null): string
+    public function getName(null | QUI\Locale $Locale = null): string
     {
         if (is_null($Locale)) {
             $Locale = QUI::getLocale();
