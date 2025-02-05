@@ -7,7 +7,6 @@
 namespace QUI\Countries;
 
 use QUI;
-
 use QUI\Exception;
 
 use function array_map;
@@ -128,12 +127,14 @@ class Country extends QUI\QDOM
         QUI::getPackage('quiqqer/currency');
 
         try {
+            // @phpstan-ignore-next-line
             return QUI\ERP\Currency\Handler::getCurrency(
                 $this->getCurrencyCode()
             );
         } catch (QUI\Exception) {
         }
 
+        // @phpstan-ignore-next-line
         return QUI\ERP\Currency\Handler::getDefaultCurrency();
     }
 
