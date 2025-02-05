@@ -200,7 +200,7 @@ class Manager extends QUI\QDOM
      * @param callable|array|null $params - optional, sorting function
      * @return array
      */
-    public static function getSortedList(callable|array $params = null): array
+    public static function getSortedList(null|callable|array $params = null): array
     {
         $complete = false;
         $sort = null;
